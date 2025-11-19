@@ -1,0 +1,3 @@
+admin|admin123|A|Administrador|Del Sistema|admin@sistema.com
+juan|1234|N|Juan|Pérez|juan@example.com
+Alex|123456|A|Alex|J|Alex.ejemplo@gmail.com
