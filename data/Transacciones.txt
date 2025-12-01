@@ -1,0 +1,2 @@
+F001|1|11011|15000.00|0.00|Ingreso a Caja Chica
+F001|2|4101|0.00|15000.00|Ingreso por servicios

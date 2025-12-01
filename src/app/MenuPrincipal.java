@@ -37,8 +37,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
         }
 
         if (usuarioLogueado.getTipo().equalsIgnoreCase("N")) {
-            btnMantenimientos.setEnabled(false);
-            btnProcesos.setEnabled(false);
+            jMenuMantenimientos.setEnabled(false);
+            jMenuProcesos.setEnabled(false);
         }
     }
 
@@ -52,12 +52,17 @@ public class MenuPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
         jLabel1 = new javax.swing.JLabel();
-        btnMantenimientos = new javax.swing.JButton();
-        btnMovimeintos = new javax.swing.JButton();
-        btnProcesos = new javax.swing.JButton();
-        btnConsultas = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenuMantenimientos = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuProcesos = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,38 +70,44 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Sistema Contable");
 
-        btnMantenimientos.setText("Mantenimientos");
-        btnMantenimientos.addActionListener(this::btnMantenimientosActionPerformed);
-
-        btnMovimeintos.setText("Movimientos");
-        btnMovimeintos.addActionListener(this::btnMovimeintosActionPerformed);
-
-        btnProcesos.setText("Procesos");
-        btnProcesos.addActionListener(this::btnProcesosActionPerformed);
-
-        btnConsultas.setText("Consultas");
-        btnConsultas.addActionListener(this::btnConsultasActionPerformed);
-
         btnSalir.setText("Salir");
         btnSalir.addActionListener(this::btnSalirActionPerformed);
+
+        jMenuMantenimientos.setText("Mantenimientos");
+
+        jMenuItem1.setText("Usuarios");
+        jMenuItem1.addActionListener(this::jMenuItem1ActionPerformed);
+        jMenuMantenimientos.add(jMenuItem1);
+
+        jMenuItem2.setText("Catalogo de Cuentas");
+        jMenuItem2.addActionListener(this::jMenuItem2ActionPerformed);
+        jMenuMantenimientos.add(jMenuItem2);
+
+        jMenuBar1.add(jMenuMantenimientos);
+
+        jMenu2.setText("Movimientos");
+
+        jMenuItem3.setText("Transacciones");
+        jMenuItem3.addActionListener(this::jMenuItem3ActionPerformed);
+        jMenu2.add(jMenuItem3);
+
+        jMenuBar1.add(jMenu2);
+
+        jMenuProcesos.setText("Procesos");
+        jMenuBar1.add(jMenuProcesos);
+
+        jMenu4.setText("Consultas");
+        jMenuBar1.add(jMenu4);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnMantenimientos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnProcesos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnConsultas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnMovimeintos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -108,15 +119,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnMantenimientos)
-                .addGap(18, 18, 18)
-                .addComponent(btnMovimeintos)
-                .addGap(18, 18, 18)
-                .addComponent(btnProcesos)
-                .addGap(18, 18, 18)
-                .addComponent(btnConsultas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 192, Short.MAX_VALUE)
                 .addComponent(btnSalir)
                 .addGap(20, 20, 20))
         );
@@ -124,27 +127,25 @@ public class MenuPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnMantenimientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMantenimientosActionPerformed
-        new MantenimientoUsuarios().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnMantenimientosActionPerformed
-
-    private void btnMovimeintosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMovimeintosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnMovimeintosActionPerformed
-
-    private void btnProcesosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcesosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnProcesosActionPerformed
-
-    private void btnConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnConsultasActionPerformed
-
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         this.dispose();
         new LoginFrame().setVisible(true);
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        this.dispose();
+        new MantenimientoCuentas().setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        this.dispose();                         // cerramos el menú actual
+        new MantenimientoUsuarios().setVisible(true); // abrimos mantenimiento de usuarios
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        this.dispose();
+        new MovimientoTransacciones().setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -172,11 +173,16 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnConsultas;
-    private javax.swing.JButton btnMantenimientos;
-    private javax.swing.JButton btnMovimeintos;
-    private javax.swing.JButton btnProcesos;
     private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenu jMenuMantenimientos;
+    private javax.swing.JMenu jMenuProcesos;
+    private javax.swing.JPopupMenu jPopupMenu1;
     // End of variables declaration//GEN-END:variables
 }

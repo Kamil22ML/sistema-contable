@@ -1,0 +1,104 @@
+package data;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import model.CabeceraTransaccion;
+
+public class CabeceraArchivo {
+
+    private static final String RUTA = "data/CabeceraTransacciones.txt";
+
+    // Buscar una cabecera por número de documento
+    public static CabeceraTransaccion buscarPorNumero(String nroDocuBuscado) {
+        File file = new File(RUTA);
+        if (!file.exists()) {
+            System.out.println("No se encuentra CabeceraTransacciones.txt: " + file.getAbsolutePath());
+            return null;
+        }
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                if (linea.trim().isEmpty()) continue;
+
+                CabeceraTransaccion c = CabeceraTransaccion.fromLine(linea);
+                if (c != null && c.getNroDocu().equalsIgnoreCase(nroDocuBuscado)) {
+                    return c;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error leyendo CabeceraTransacciones.txt: " + e.getMessage());
+        }
+        return null;
+    }
+
+    // Cargar todas las cabeceras
+    public static List<CabeceraTransaccion> cargarTodas() {
+        List<CabeceraTransaccion> lista = new ArrayList<>();
+        File file = new File(RUTA);
+
+        if (!file.exists()) {
+            return lista;
+        }
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                if (linea.trim().isEmpty()) continue;
+                CabeceraTransaccion c = CabeceraTransaccion.fromLine(linea);
+                if (c != null) lista.add(c);
+            }
+        } catch (IOException e) {
+            System.out.println("Error leyendo CabeceraTransacciones.txt: " + e.getMessage());
+        }
+        return lista;
+    }
+
+    // Guardar lista completa (sobreescribe archivo)
+    private static void guardarLista(List<CabeceraTransaccion> lista) {
+        File file = new File(RUTA);
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, false))) {
+            for (CabeceraTransaccion c : lista) {
+                bw.write(c.toLine());
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Error escribiendo CabeceraTransacciones.txt: " + e.getMessage());
+        }
+    }
+
+    // Agregar nueva cabecera (si no existe el número)
+    public static boolean agregar(CabeceraTransaccion nueva) {
+        List<CabeceraTransaccion> lista = cargarTodas();
+
+        for (CabeceraTransaccion c : lista) {
+            if (c.getNroDocu().equalsIgnoreCase(nueva.getNroDocu())) {
+                return false; // ya existe
+            }
+        }
+
+        lista.add(nueva);
+        guardarLista(lista);
+        return true;
+    }
+
+    // Actualizar cabecera existente (mismo nroDocu)
+    public static boolean actualizar(CabeceraTransaccion modificada) {
+        List<CabeceraTransaccion> lista = cargarTodas();
+        boolean encontrada = false;
+
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).getNroDocu().equalsIgnoreCase(modificada.getNroDocu())) {
+                lista.set(i, modificada);
+                encontrada = true;
+                break;
+            }
+        }
+
+        if (encontrada) {
+            guardarLista(lista);
+        }
+        return encontrada;
+    }
+}
