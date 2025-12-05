@@ -56,8 +56,8 @@ public class DetalleArchivo {
         }
         return lista;
     }
-
-    // Agregar una línea de detalle (append al archivo)
+    
+   // 👉 Agregar una línea nueva (append al archivo)
     public static boolean agregar(DetalleTransaccion nuevo) {
         File file = new File(RUTA);
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, true))) {
@@ -68,5 +68,38 @@ public class DetalleArchivo {
             System.out.println("Error escribiendo Transacciones.txt: " + e.getMessage());
             return false;
         }
+    }
+
+    // 👉 Guardar TODA la lista (sobrescribe el archivo)
+    private static void guardarLista(List<DetalleTransaccion> lista) {
+        File file = new File(RUTA);
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, false))) {
+            for (DetalleTransaccion d : lista) {
+                bw.write(d.toLine());
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Error escribiendo Transacciones.txt: " + e.getMessage());
+        }
+    }
+
+    // 👉 Actualizar una línea existente (mismo nroDoc + secuencia)
+    public static boolean actualizar(DetalleTransaccion modificado) {
+        List<DetalleTransaccion> todos = cargarTodos();
+        boolean encontrado = false;
+
+        for (int i = 0; i < todos.size(); i++) {
+            DetalleTransaccion d = todos.get(i);
+            if (d.getNroDoc().equalsIgnoreCase(modificado.getNroDoc())
+                    && d.getSecuencia() == modificado.getSecuencia()) {
+                todos.set(i, modificado);
+                encontrado = true;
+                break;
+            }
+        }
+        if (encontrado) {
+            guardarLista(todos);   // ✅ ahora sí recibe una List<DetalleTransaccion>
+        }
+        return encontrado;
     }
 }

@@ -7,6 +7,7 @@ package app;
 
 public class MovimientoTransacciones extends javax.swing.JFrame {
     
+    private Integer secuenciaEditando = null;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MovimientoTransacciones.class.getName());
 
     /**
@@ -15,7 +16,44 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
     public MovimientoTransacciones() {
         initComponents();
         setLocationRelativeTo(null); // centrar
+        
+        tblDetalles.addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent e) {
+            if (e.getClickCount() == 2) { // doble clic
+                int fila = tblDetalles.getSelectedRow();
+                if (fila >= 0) {
+                    // Datos de la tabla
+                    int secuencia = Integer.parseInt(
+                            tblDetalles.getValueAt(fila, 0).toString());
+                    String cuenta = tblDetalles.getValueAt(fila, 1).toString();
+                    double debito = Double.parseDouble(
+                            tblDetalles.getValueAt(fila, 2).toString());
+                    double credito = Double.parseDouble(
+                            tblDetalles.getValueAt(fila, 3).toString());
+                    String comentario = tblDetalles.getValueAt(fila, 4).toString();
+
+                    // Guardamos la secuencia que se está editando
+                    secuenciaEditando = secuencia;
+
+                    // Llenamos el formulario de detalle
+                    txtCuenta.setText(cuenta);
+                    txtComentario.setText(comentario);
+                    if (debito > 0) {
+                        rbDebito.setSelected(true);
+                        txtMontoLinea.setText(String.valueOf(debito));
+                    } else {
+                        rbCredito.setSelected(true);
+                        txtMontoLinea.setText(String.valueOf(credito));
+                    }
+                }
+            }
+        }
+    });
     }
+    
+    
+
     
     private void actualizarAreaDetalles(String nroDocu) {
     java.util.List<model.DetalleTransaccion> detalles =
@@ -31,7 +69,6 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
                 d.getValorCredito(),
                 d.getComentario()));
     }
-    txtDetalles.setText(sb.toString());
 }
 
 
@@ -44,6 +81,7 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        grpTipoLinea = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtNroDocu = new javax.swing.JTextField();
@@ -62,15 +100,16 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         txtCuenta = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        txtDebito = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        txtCredito = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtDetalles = new javax.swing.JTextArea();
         btnAgregarDetalle = new javax.swing.JButton();
         btnCerrar = new javax.swing.JButton();
         txtComentario = new javax.swing.JTextField();
+        txtMontoLinea = new javax.swing.JTextField();
+        rbDebito = new javax.swing.JRadioButton();
+        rbCredito = new javax.swing.JRadioButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblDetalles = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -106,16 +145,30 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
 
         jLabel11.setText("Comentario");
 
-        txtDetalles.setColumns(20);
-        txtDetalles.setRows(5);
-        jScrollPane1.setViewportView(txtDetalles);
-
         btnAgregarDetalle.setText("Agregar Detalle");
         btnAgregarDetalle.setToolTipText("");
         btnAgregarDetalle.addActionListener(this::btnAgregarDetalleActionPerformed);
 
         btnCerrar.setText("Cerrar");
         btnCerrar.addActionListener(this::btnCerrarActionPerformed);
+
+        grpTipoLinea.add(rbDebito);
+        rbDebito.addActionListener(this::rbDebitoActionPerformed);
+
+        grpTipoLinea.add(rbCredito);
+
+        tblDetalles.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tblDetalles);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -161,36 +214,37 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
                                             .addComponent(cbTipoDocu, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
                                                 .addComponent(btnGuardar)))))
                                 .addGap(15, 15, 15))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(txtCuenta)
-                                            .addComponent(txtDebito, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
-                                            .addComponent(txtCredito)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel8)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(rbDebito)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(rbCredito)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(270, 270, 270)
-                                        .addComponent(btnAgregarDetalle))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(44, 44, 44)
+                                        .addComponent(txtCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(45, 45, 45)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel11)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addComponent(txtComentario, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(btnCerrar)
-                                                .addGap(17, 17, 17)))))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                            .addComponent(txtComentario, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnAgregarDetalle)
+                                        .addGap(12, 12, 12))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txtMontoLinea, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnCerrar)
+                                        .addGap(23, 23, 23)))))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -226,32 +280,28 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel11))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(btnAgregarDetalle)
-                        .addGap(26, 26, 26)
-                        .addComponent(btnCerrar))
-                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel11))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtComentario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel9)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10)
+                            .addComponent(rbDebito)
+                            .addComponent(rbCredito))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtDebito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel10)
-                                .addGap(5, 5, 5)
-                                .addComponent(txtCredito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(29, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtMontoLinea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCerrar)))
+                    .addComponent(btnAgregarDetalle))
+                .addGap(23, 23, 23)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -275,7 +325,6 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
             txtDescripcion.setText("");
             txtHechoPor.setText("");
             txtMonto.setText("");
-            txtDetalles.setText("");
             javax.swing.JOptionPane.showMessageDialog(this,
                     "Documento no existe. Puede crearlo.",
                     "Información",
@@ -299,7 +348,7 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
             txtDescripcion.setText(cab.getDescripcion());
             txtHechoPor.setText(cab.getHechoPor());
             txtMonto.setText(String.valueOf(cab.getMontoTransaccion()));
-            actualizarAreaDetalles(nro);
+            cargarTablaDetalles(nro);
         }
 
     }//GEN-LAST:event_txtNroDocuActionPerformed
@@ -399,11 +448,9 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnAgregarDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarDetalleActionPerformed
-                                                
         String nro = txtNroDocu.getText().trim();
         String cuenta = txtCuenta.getText().trim();
-        String debitoTexto = txtDebito.getText().trim();
-        String creditoTexto = txtCredito.getText().trim();
+        String montoTexto = txtMontoLinea.getText().trim();
         String comentario = txtComentario.getText().trim();
 
         if (nro.isEmpty()) {
@@ -432,55 +479,93 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
             return;
         }
 
+        if (montoTexto.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Debe indicar un monto.",
+                    "Validación",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (!rbDebito.isSelected() && !rbCredito.isSelected()) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Debe seleccionar si el monto es Débito o Crédito.",
+                    "Validación",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        double monto;
+        try {
+            monto = Double.parseDouble(montoTexto);
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "El monto debe ser numérico.",
+                    "Validación",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (monto == 0) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "El monto debe ser mayor que cero.",
+                    "Validación",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         double debito = 0.0;
         double credito = 0.0;
 
-        try {
-            if (!debitoTexto.isEmpty()) {
-                debito = Double.parseDouble(debitoTexto);
-            }
-            if (!creditoTexto.isEmpty()) {
-                credito = Double.parseDouble(creditoTexto);
-            }
-        } catch (NumberFormatException e) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Débito y Crédito deben ser numéricos.",
-                    "Validación",
-                    javax.swing.JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        if (debito == 0 && credito == 0) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Debe indicar un valor en Débito o Crédito.",
-                    "Validación",
-                    javax.swing.JOptionPane.WARNING_MESSAGE);
-            return;
+        if (rbDebito.isSelected()) {
+            debito = monto;
+        } else {
+            credito = monto;
         }
 
         // Determinar secuencia: cantidad de líneas + 1
-        java.util.List<model.DetalleTransaccion> existentes =
-                data.DetalleArchivo.cargarPorDocumento(nro);
-        int secuencia = existentes.size() + 1;
+        int secuencia;
+
+        // ¿estamos editando o creando?
+        if (secuenciaEditando == null) {
+            // NUEVA línea
+            java.util.List<model.DetalleTransaccion> existentes =
+                    data.DetalleArchivo.cargarPorDocumento(nro);
+            secuencia = existentes.size() + 1;
+        } else {
+            // EDITANDO una existente
+            secuencia = secuenciaEditando;
+        }
 
         model.DetalleTransaccion det = new model.DetalleTransaccion(
                 nro, secuencia, cuenta, debito, credito, comentario);
 
-        boolean ok = data.DetalleArchivo.agregar(det);
+        boolean ok;
+        if (secuenciaEditando == null) {
+            ok = data.DetalleArchivo.agregar(det);
+        } else {
+            ok = data.DetalleArchivo.actualizar(det);
+        }
+
 
         if (ok) {
             javax.swing.JOptionPane.showMessageDialog(this,
                     "Detalle agregado.",
                     "Información",
                     javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            // limpiar campos de detalle
+            
+            cargarTablaDetalles(nro);
             txtCuenta.setText("");
-            txtDebito.setText("");
-            txtCredito.setText("");
+            txtMontoLinea.setText("");
             txtComentario.setText("");
+            rbDebito.setSelected(true);
             txtCuenta.requestFocus();
+            
+            secuenciaEditando = null; // terminamos edición
 
-            actualizarAreaDetalles(nro);
+            cargarTablaDetalles(nro);
+            // Aquí luego llamaremos a cargarTablaDetalles(nro)
+            // cuando tengamos la tabla creada.
         } else {
             javax.swing.JOptionPane.showMessageDialog(this,
                     "No se pudo agregar el detalle.",
@@ -493,6 +578,10 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
         this.dispose();
         new MenuPrincipal().setVisible(true);
     }//GEN-LAST:event_btnCerrarActionPerformed
+
+    private void rbDebitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbDebitoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbDebitoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -518,12 +607,42 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new MovimientoTransacciones().setVisible(true));
     }
+    
+    private void cargarTablaDetalles(String nroDocu) {
+        java.util.List<model.DetalleTransaccion> lista =
+                data.DetalleArchivo.cargarPorDocumento(nroDocu);
+
+        String[] columnas = { "Secuencia", "Cuenta", "Débito", "Crédito", "Comentario" };
+
+        javax.swing.table.DefaultTableModel modelo =
+                new javax.swing.table.DefaultTableModel(columnas, 0) {
+                    @Override
+                    public boolean isCellEditable(int row, int column) {
+                        return false; // tabla solo lectura
+                    }
+                };
+
+        for (model.DetalleTransaccion d : lista) {
+            Object[] fila = {
+                    d.getSecuencia(),
+                    d.getCuentaContable(),
+                    d.getValorDebito(),
+                    d.getValorCredito(),
+                    d.getComentario()
+            };
+            modelo.addRow(fila);
+        }
+
+        tblDetalles.setModel(modelo);
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarDetalle;
     private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JComboBox<String> cbTipoDocu;
+    private javax.swing.ButtonGroup grpTipoLinea;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -535,17 +654,18 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JRadioButton rbCredito;
+    private javax.swing.JRadioButton rbDebito;
+    private javax.swing.JTable tblDetalles;
     private javax.swing.JTextField txtComentario;
-    private javax.swing.JTextField txtCredito;
     private javax.swing.JTextField txtCuenta;
-    private javax.swing.JTextField txtDebito;
     private javax.swing.JTextField txtDescripcion;
-    private javax.swing.JTextArea txtDetalles;
     private javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtHechoPor;
     private javax.swing.JTextField txtMonto;
+    private javax.swing.JTextField txtMontoLinea;
     private javax.swing.JTextField txtNroDocu;
     // End of variables declaration//GEN-END:variables
 }

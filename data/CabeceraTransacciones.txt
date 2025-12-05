@@ -1,1 +1,1 @@
-F001|12-22-2024|1|Mouse Gaming|Alex|2000.0|12-22-2024|false
+F001|12/5/2025|1|Ingreso a Caja|Alex|2000.0|12/5/2025|false
