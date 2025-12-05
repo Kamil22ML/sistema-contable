@@ -110,6 +110,7 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
         rbCredito = new javax.swing.JRadioButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblDetalles = new javax.swing.JTable();
+        btnActualizarMonto = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -138,6 +139,8 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
         btnGuardar.addActionListener(this::btnGuardarActionPerformed);
 
         jLabel8.setText("Cuenta Contable");
+
+        txtCuenta.addActionListener(this::txtCuentaActionPerformed);
 
         jLabel9.setText("Debito");
 
@@ -169,6 +172,9 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
             }
         ));
         jScrollPane2.setViewportView(tblDetalles);
+
+        btnActualizarMonto.setText("Actualizar monto");
+        btnActualizarMonto.addActionListener(this::btnActualizarMontoActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -210,23 +216,28 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(6, 6, 6)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(cbTipoDocu, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(cbTipoDocu, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(0, 0, Short.MAX_VALUE))
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
-                                                .addComponent(btnGuardar)))))
-                                .addGap(15, 15, 15))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel8)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(rbDebito)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(rbCredito)))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(btnGuardar))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(btnActualizarMonto)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addGap(12, 12, 12))
+                            .addComponent(jLabel8)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rbDebito)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rbCredito))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,7 +248,7 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel11)
                                             .addComponent(txtComentario, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                                         .addComponent(btnAgregarDetalle)
                                         .addGap(12, 12, 12))
                                     .addGroup(layout.createSequentialGroup()
@@ -276,24 +287,25 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtHechoPor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnActualizarMonto))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel11))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel8))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtComentario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
                             .addComponent(rbDebito)
-                            .addComponent(rbCredito))
+                            .addComponent(rbCredito)
+                            .addComponent(jLabel9))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtMontoLinea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -583,6 +595,87 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rbDebitoActionPerformed
 
+    private void txtCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCuentaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCuentaActionPerformed
+
+    private void btnActualizarMontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarMontoActionPerformed
+        String nro = txtNroDocu.getText().trim();
+
+        if (nro.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Debe indicar un Nro de documento primero.",
+                    "Validación",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Buscar la cabecera existente
+        model.CabeceraTransaccion cab =
+                data.CabeceraArchivo.buscarPorNumero(nro);
+
+        if (cab == null) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "La cabecera del documento no existe. Guárdela primero.",
+                    "Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Cargar detalles del documento
+        java.util.List<model.DetalleTransaccion> detalles =
+                data.DetalleArchivo.cargarPorDocumento(nro);
+
+        if (detalles.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "El documento no tiene detalles. No se puede calcular el monto.",
+                    "Validación",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        double totalDebito = 0.0;
+        double totalCredito = 0.0;
+
+        for (model.DetalleTransaccion d : detalles) {
+            totalDebito += d.getValorDebito();
+            totalCredito += d.getValorCredito();
+        }
+
+        // Verificar que la transacción esté cuadrada
+        if (Math.abs(totalDebito - totalCredito) > 0.001) { // tolerancia pequeña
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    String.format("La transacción no está cuadrada.%nDébitos: %.2f  Créditos: %.2f",
+                            totalDebito, totalCredito),
+                    "Error de cuadratura",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Si está cuadrada, usamos el total de débitos como monto de la cabecera
+        cab.setMontoTransaccion(totalDebito);
+
+        // Opcional: actualizar fecha de actualización con la fecha de hoy
+        String hoy = java.time.LocalDate.now().toString(); // yyyy-MM-dd
+        cab.setFechaActualizacion(hoy);
+
+        boolean ok = data.CabeceraArchivo.actualizar(cab);
+
+        if (ok) {
+            txtMonto.setText(String.valueOf(totalDebito));
+
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    String.format("Monto de cabecera actualizado correctamente.%nMonto: %.2f", totalDebito),
+                    "Información",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "No se pudo actualizar la cabecera.",
+                    "Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnActualizarMontoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -638,6 +731,7 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizarMonto;
     private javax.swing.JButton btnAgregarDetalle;
     private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btnGuardar;

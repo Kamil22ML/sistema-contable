@@ -1,1 +1,2 @@
-F001|12/5/2025|1|Ingreso a Caja|Alex|2000.0|12/5/2025|false
+F001|12/5/2025|1|Ingreso a Caja|Alex|15000.0|12/5/2025|false
+F003|12/5/2025|3|Ingreso|Alex|2500.0|12/5/2025|false
