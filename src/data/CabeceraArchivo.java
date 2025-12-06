@@ -101,4 +101,59 @@ public class CabeceraArchivo {
         }
         return encontrada;
     }
+    
+    public static List<CabeceraTransaccion> cargarTodos() {
+        List<CabeceraTransaccion> lista = new ArrayList<>();
+        File file = new File(RUTA);
+        if (!file.exists()) return lista;
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                if (linea.trim().isEmpty()) continue;
+                CabeceraTransaccion c = CabeceraTransaccion.fromLine(linea);
+                if (c != null) lista.add(c);
+            }
+        } catch (IOException e) {
+            System.out.println("Error leyendo CabeceraTransacciones.txt: " + e.getMessage());
+        }
+        return lista;
+    }
+
+    public static List<CabeceraTransaccion> cargarPorFecha(String fecha) {
+        List<CabeceraTransaccion> lista = new ArrayList<>();
+        for (CabeceraTransaccion c : cargarTodos()) {
+            if (fecha.equals(c.getFechaDocu())) {
+                lista.add(c);
+            }
+        }
+        return lista;
+    }
+
+    public static List<CabeceraTransaccion> cargarPorRango(String desde, String hasta) {
+        List<CabeceraTransaccion> lista = new ArrayList<>();
+        // asumiendo formato dd/MM/yyyy
+        java.time.format.DateTimeFormatter f = java.time.format.DateTimeFormatter.ofPattern("d/M/yyyy");
+        java.time.LocalDate d1 = java.time.LocalDate.parse(desde, f);
+        java.time.LocalDate d2 = java.time.LocalDate.parse(hasta, f);
+
+        for (CabeceraTransaccion c : cargarTodos()) {
+            java.time.LocalDate dCab = java.time.LocalDate.parse(c.getFechaDocu(), f);
+            if (!dCab.isBefore(d1) && !dCab.isAfter(d2)) {
+                lista.add(c);
+            }
+        }
+        return lista;
+    }
+
+    public static List<CabeceraTransaccion> cargarPorTipo(int tipoDoc) {
+        List<CabeceraTransaccion> lista = new ArrayList<>();
+        for (CabeceraTransaccion c : cargarTodos()) {
+            if (c.getTipoDocu() == tipoDoc) {
+                lista.add(c);
+            }
+        }
+        return lista;
+    }
+
 }
