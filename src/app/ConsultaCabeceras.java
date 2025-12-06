@@ -253,6 +253,7 @@ public class ConsultaCabeceras extends javax.swing.JFrame {
         txtDesde.setText("");
         txtHasta.setText("");
         cbTipo.setSelectedIndex(0);
+        grpFiltro.clearSelection();
 
         // Opcional: seleccionar automáticamente la opción "Todos"
         // rbTodos.setSelected(true);
