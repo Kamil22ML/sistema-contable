@@ -131,6 +131,7 @@ public class ConsultaCatalogoCuentas extends javax.swing.JFrame {
         rbDescripcion.setText("Por descripcion");
 
         btnCargar.setText("Cargar");
+        btnCargar.addActionListener(this::btnCargarActionPerformed);
 
         btnCerrar.setText("Cerrar");
         btnCerrar.addActionListener(this::btnCerrarActionPerformed);
@@ -210,6 +211,41 @@ public class ConsultaCatalogoCuentas extends javax.swing.JFrame {
         this.dispose();
         new MenuPrincipal().setVisible(true);
     }//GEN-LAST:event_btnCerrarActionPerformed
+
+    private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
+        String filtro = txtFiltro.getText().trim();
+
+        // Buscar por número
+        if (rbNumero.isSelected()) {
+            if (filtro.isEmpty()) {
+                cargarTablaTodos();
+            } else {
+                cargarTablaPorNumero(filtro);
+            }
+
+            // limpiar filtro y radios si quieres
+            txtFiltro.setText("");
+            grpFiltro.clearSelection();
+            return;
+        }
+
+        // Buscar por descripción
+        if (rbDescripcion.isSelected()) {
+            if (filtro.isEmpty()) {
+                cargarTablaTodos();
+            } else {
+                cargarTablaPorDescripcion(filtro);
+            }
+
+            txtFiltro.setText("");
+            grpFiltro.clearSelection();
+            return;
+        }
+
+        // Si ningún radio está seleccionado → mostrar todo
+        cargarTablaTodos();
+        txtFiltro.setText("");
+    }//GEN-LAST:event_btnCargarActionPerformed
 
     /**
      * @param args the command line arguments
