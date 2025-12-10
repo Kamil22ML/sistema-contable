@@ -92,8 +92,8 @@ public class BalanzaComprobacion extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnCargar = new javax.swing.JButton();
         btnCerrar = new javax.swing.JButton();
-        tblBalanza = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jScrollPanel = new javax.swing.JScrollPane();
+        tblBalanza = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -108,7 +108,7 @@ public class BalanzaComprobacion extends javax.swing.JFrame {
         btnCerrar.setText("Cerrar");
         btnCerrar.addActionListener(this::btnCerrarActionPerformed);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblBalanza.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -119,7 +119,7 @@ public class BalanzaComprobacion extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblBalanza.setViewportView(jTable1);
+        jScrollPanel.setViewportView(tblBalanza);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -133,7 +133,7 @@ public class BalanzaComprobacion extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tblBalanza, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCargar))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
@@ -145,7 +145,7 @@ public class BalanzaComprobacion extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnCargar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tblBalanza, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                .addComponent(jScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCerrar)
                 .addGap(14, 14, 14))
@@ -192,7 +192,7 @@ public class BalanzaComprobacion extends javax.swing.JFrame {
     private javax.swing.JButton btnCargar;
     private javax.swing.JButton btnCerrar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JScrollPane tblBalanza;
+    private javax.swing.JScrollPane jScrollPanel;
+    private javax.swing.JTable tblBalanza;
     // End of variables declaration//GEN-END:variables
 }
