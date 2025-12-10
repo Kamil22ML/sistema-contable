@@ -17,42 +17,44 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null); // centrar
         
-        tblDetalles.addMouseListener(new java.awt.event.MouseAdapter() {
-        @Override
-        public void mouseClicked(java.awt.event.MouseEvent e) {
-            if (e.getClickCount() == 2) { // doble clic
-                int fila = tblDetalles.getSelectedRow();
-                if (fila >= 0) {
-                    // Datos de la tabla
-                    int secuencia = Integer.parseInt(
-                            tblDetalles.getValueAt(fila, 0).toString());
-                    String cuenta = tblDetalles.getValueAt(fila, 1).toString();
-                    double debito = Double.parseDouble(
-                            tblDetalles.getValueAt(fila, 2).toString());
-                    double credito = Double.parseDouble(
-                            tblDetalles.getValueAt(fila, 3).toString());
-                    String comentario = tblDetalles.getValueAt(fila, 4).toString();
-
-                    // Guardamos la secuencia que se está editando
-                    secuenciaEditando = secuencia;
-
-                    // Llenamos el formulario de detalle
-                    txtCuenta.setText(cuenta);
-                    txtComentario.setText(comentario);
-                    if (debito > 0) {
-                        rbDebito.setSelected(true);
-                        txtMontoLinea.setText(String.valueOf(debito));
-                    } else {
-                        rbCredito.setSelected(true);
-                        txtMontoLinea.setText(String.valueOf(credito));
-                    }
-                }
+        // Debito / Credito mutuamente excluyentes
+        txtDebitoLinea.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyReleased(java.awt.event.KeyEvent e) {
+                debitoCambio();
             }
-        }
-    });
+        });
+
+        txtCreditoLinea.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyReleased(java.awt.event.KeyEvent e) {
+                creditoCambio();
+            }
+        });
     }
     
     
+    private void debitoCambio() {
+        String debito = txtDebitoLinea.getText().trim();
+        if (!debito.isEmpty()) {
+            // si escribo débito, bloqueo crédito
+            txtCreditoLinea.setText("");
+            txtCreditoLinea.setEnabled(false);
+        } else {
+            // si borro débito, vuelvo a permitir crédito
+            txtCreditoLinea.setEnabled(true);
+        }
+    }
+
+    private void creditoCambio() {
+        String credito = txtCreditoLinea.getText().trim();
+        if (!credito.isEmpty()) {
+            txtDebitoLinea.setText("");
+            txtDebitoLinea.setEnabled(false);
+        } else {
+            txtDebitoLinea.setEnabled(true);
+        }
+    }
 
     
     private void actualizarAreaDetalles(String nroDocu) {
@@ -105,12 +107,12 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
         btnAgregarDetalle = new javax.swing.JButton();
         btnCerrar = new javax.swing.JButton();
         txtComentario = new javax.swing.JTextField();
-        txtMontoLinea = new javax.swing.JTextField();
-        rbDebito = new javax.swing.JRadioButton();
-        rbCredito = new javax.swing.JRadioButton();
+        txtDebitoLinea = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblDetalles = new javax.swing.JTable();
         btnActualizarMonto = new javax.swing.JButton();
+        txtCreditoLinea = new javax.swing.JTextField();
+        lblNombreCuenta = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -154,11 +156,6 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
 
         btnCerrar.setText("Cerrar");
         btnCerrar.addActionListener(this::btnCerrarActionPerformed);
-
-        grpTipoLinea.add(rbDebito);
-        rbDebito.addActionListener(this::rbDebitoActionPerformed);
-
-        grpTipoLinea.add(rbCredito);
 
         tblDetalles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -226,25 +223,16 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(btnActualizarMonto)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                                .addComponent(btnActualizarMonto)))))
                                 .addGap(12, 12, 12))
-                            .addComponent(jLabel8)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(rbDebito)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(rbCredito))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(txtCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(45, 45, 45)
+                                        .addComponent(txtCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblNombreCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(80, 80, 80)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel11)
                                             .addComponent(txtComentario, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -252,10 +240,24 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
                                         .addComponent(btnAgregarDetalle)
                                         .addGap(12, 12, 12))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(txtMontoLinea, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(0, 0, Short.MAX_VALUE)
                                         .addComponent(btnCerrar)
-                                        .addGap(23, 23, 23)))))))
+                                        .addGap(23, 23, 23))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtDebitoLinea, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtCreditoLinea, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -299,17 +301,16 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
                             .addComponent(jLabel8))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtComentario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtComentario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNombreCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(rbDebito)
-                            .addComponent(rbCredito)
-                            .addComponent(jLabel9))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtMontoLinea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCerrar)))
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10)
+                            .addComponent(txtDebitoLinea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCreditoLinea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(7, 7, 7)
+                        .addComponent(btnCerrar))
                     .addComponent(btnAgregarDetalle))
                 .addGap(23, 23, 23)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -462,7 +463,8 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
     private void btnAgregarDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarDetalleActionPerformed
         String nro = txtNroDocu.getText().trim();
         String cuenta = txtCuenta.getText().trim();
-        String montoTexto = txtMontoLinea.getText().trim();
+        String debitoTxt = txtDebitoLinea.getText().trim();
+        String creditoTxt = txtCreditoLinea.getText().trim();
         String comentario = txtComentario.getText().trim();
 
         if (nro.isEmpty()) {
@@ -488,39 +490,13 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
                     "La cuenta contable no existe en el catálogo.",
                     "Validación",
                     javax.swing.JOptionPane.WARNING_MESSAGE);
+            txtCuenta.requestFocus();
             return;
         }
 
-        if (montoTexto.isEmpty()) {
+        if (debitoTxt.isEmpty() && creditoTxt.isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(this,
-                    "Debe indicar un monto.",
-                    "Validación",
-                    javax.swing.JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        if (!rbDebito.isSelected() && !rbCredito.isSelected()) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Debe seleccionar si el monto es Débito o Crédito.",
-                    "Validación",
-                    javax.swing.JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        double monto;
-        try {
-            monto = Double.parseDouble(montoTexto);
-        } catch (NumberFormatException e) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "El monto debe ser numérico.",
-                    "Validación",
-                    javax.swing.JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        if (monto == 0) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "El monto debe ser mayor que cero.",
+                    "Debe indicar un monto en Débito o en Crédito.",
                     "Validación",
                     javax.swing.JOptionPane.WARNING_MESSAGE);
             return;
@@ -529,23 +505,53 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
         double debito = 0.0;
         double credito = 0.0;
 
-        if (rbDebito.isSelected()) {
-            debito = monto;
-        } else {
-            credito = monto;
+        // Solo uno de los dos debe tener valor
+        if (!debitoTxt.isEmpty() && !creditoTxt.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Solo puede llenar Débito o Crédito, no ambos.",
+                    "Validación",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
         }
 
-        // Determinar secuencia: cantidad de líneas + 1
-        int secuencia;
+        try {
+            if (!debitoTxt.isEmpty()) {
+                debito = Double.parseDouble(debitoTxt);
+            }
+            if (!creditoTxt.isEmpty()) {
+                credito = Double.parseDouble(creditoTxt);
+            }
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Los montos deben ser numéricos.",
+                    "Validación",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-        // ¿estamos editando o creando?
+        if (debito < 0 || credito < 0) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Los montos no pueden ser negativos.",
+                    "Validación",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (debito == 0 && credito == 0) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "El monto debe ser mayor que cero.",
+                    "Validación",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Determinar secuencia (si usas edición, conserva tu lógica con secuenciaEditando)
+        int secuencia;
         if (secuenciaEditando == null) {
-            // NUEVA línea
             java.util.List<model.DetalleTransaccion> existentes =
                     data.DetalleArchivo.cargarPorDocumento(nro);
             secuencia = existentes.size() + 1;
         } else {
-            // EDITANDO una existente
             secuencia = secuenciaEditando;
         }
 
@@ -559,28 +565,25 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
             ok = data.DetalleArchivo.actualizar(det);
         }
 
-
         if (ok) {
             javax.swing.JOptionPane.showMessageDialog(this,
-                    "Detalle agregado.",
+                    (secuenciaEditando == null ? "Detalle agregado." : "Detalle actualizado."),
                     "Información",
                     javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            
-            cargarTablaDetalles(nro);
-            txtCuenta.setText("");
-            txtMontoLinea.setText("");
-            txtComentario.setText("");
-            rbDebito.setSelected(true);
-            txtCuenta.requestFocus();
-            
-            secuenciaEditando = null; // terminamos edición
 
+            secuenciaEditando = null;
             cargarTablaDetalles(nro);
-            // Aquí luego llamaremos a cargarTablaDetalles(nro)
-            // cuando tengamos la tabla creada.
+
+            txtCuenta.setText("");
+            txtDebitoLinea.setText("");
+            txtCreditoLinea.setText("");
+            txtDebitoLinea.setEnabled(true);
+            txtCreditoLinea.setEnabled(true);
+            txtComentario.setText("");
+            txtCuenta.requestFocus();
         } else {
             javax.swing.JOptionPane.showMessageDialog(this,
-                    "No se pudo agregar el detalle.",
+                    "No se pudo guardar el detalle.",
                     "Error",
                     javax.swing.JOptionPane.ERROR_MESSAGE);
         }
@@ -591,12 +594,35 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
         new MenuPrincipal().setVisible(true);
     }//GEN-LAST:event_btnCerrarActionPerformed
 
-    private void rbDebitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbDebitoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rbDebitoActionPerformed
-
     private void txtCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCuentaActionPerformed
-        // TODO add your handling code here:
+        String cuenta = txtCuenta.getText().trim();
+        if (cuenta.isEmpty()) {
+            return;
+        }
+
+        model.CuentaContable cta = data.CuentaArchivo.buscarPorNumero(cuenta);
+
+        if (cta == null) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "La cuenta " + cuenta + " no existe en el catálogo.",
+                    "Cuenta no encontrada",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+            // limpiar y volver al campo
+            txtCuenta.setText("");
+            lblNombreCuenta.setText("");
+            txtCuenta.requestFocus();
+        } else {
+            // Cuenta válida: puedes mostrar la descripción
+            lblNombreCuenta.setText(cta.getDescripcion());
+
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Cuenta encontrada: " + cta.getDescripcion(),
+                    "Cuenta válida",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+            // mover el foco al campo de débito
+            txtDebitoLinea.requestFocus();
+        }
     }//GEN-LAST:event_txtCuentaActionPerformed
 
     private void btnActualizarMontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarMontoActionPerformed
@@ -750,16 +776,16 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JRadioButton rbCredito;
-    private javax.swing.JRadioButton rbDebito;
+    private javax.swing.JTextField lblNombreCuenta;
     private javax.swing.JTable tblDetalles;
     private javax.swing.JTextField txtComentario;
+    private javax.swing.JTextField txtCreditoLinea;
     private javax.swing.JTextField txtCuenta;
+    private javax.swing.JTextField txtDebitoLinea;
     private javax.swing.JTextField txtDescripcion;
     private javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtHechoPor;
     private javax.swing.JTextField txtMonto;
-    private javax.swing.JTextField txtMontoLinea;
     private javax.swing.JTextField txtNroDocu;
     // End of variables declaration//GEN-END:variables
 }
