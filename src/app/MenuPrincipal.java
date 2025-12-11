@@ -62,6 +62,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuProcesos = new javax.swing.JMenu();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         mnuTransxDocumento = new javax.swing.JMenuItem();
@@ -98,6 +99,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenuProcesos.setText("Procesos");
+
+        jMenuItem7.setText("Cierre Diario");
+        jMenuItem7.addActionListener(this::jMenuItem7ActionPerformed);
+        jMenuProcesos.add(jMenuItem7);
+
         jMenuBar1.add(jMenuProcesos);
 
         jMenu4.setText("Consultas");
@@ -188,6 +194,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         new BalanzaComprobacion().setVisible(true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        this.dispose();
+        new CierreDiario().setVisible(true);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -225,6 +236,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenu jMenuMantenimientos;
     private javax.swing.JMenu jMenuProcesos;
     private javax.swing.JPopupMenu jPopupMenu1;

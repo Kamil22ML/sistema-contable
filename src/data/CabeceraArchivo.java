@@ -102,6 +102,45 @@ public class CabeceraArchivo {
         return encontrada;
     }
     
+    public static int cerrarPorRangoFechas(String desde, String hasta) {
+        // Formato de fechas que estás usando en el sistema
+        java.time.format.DateTimeFormatter f =
+                java.time.format.DateTimeFormatter.ofPattern("d/M/yyyy");
+
+        java.time.LocalDate d1 = java.time.LocalDate.parse(desde, f);
+        java.time.LocalDate d2 = java.time.LocalDate.parse(hasta, f);
+
+        java.util.List<model.CabeceraTransaccion> todos = cargarTodos();
+        int contador = 0;
+
+        // Fecha de actualización = hoy
+        String fechaHoy = java.time.LocalDate.now().format(f);
+
+        for (model.CabeceraTransaccion c : todos) {
+
+            // Solo documentos PENDIENTES
+            if (c.isStatusActualizacion()) {
+                continue; // ya estaban cerrados
+            }
+
+            java.time.LocalDate fechaDoc =
+                    java.time.LocalDate.parse(c.getFechaDocu(), f);
+
+            if (!fechaDoc.isBefore(d1) && !fechaDoc.isAfter(d2)) {
+                // Está dentro del rango: marcar como actualizado
+                c.setFechaActualizacion(fechaHoy);
+                c.setStatusActualizacion(true);
+                contador++;
+            }
+        }
+
+        // Guardar la lista completa nuevamente en el archivo
+        guardarLista(todos);
+
+        return contador;
+    }
+
+    
     public static List<CabeceraTransaccion> cargarTodos() {
         List<CabeceraTransaccion> lista = new ArrayList<>();
         File file = new File(RUTA);

@@ -2,3 +2,12 @@ F001|1|4101|0.0|15000.0|Resgitro de ingresos
 F002|2|4101|0.0|15000.0|Ingreso por servicios
 F003|3|1101|2000.0|0.0|Ingreso en caja
 F001|2|1101|15000.0|0.0|ingreso a caja
+F001|3|11011|1500.0|0.0|Ingreso efectivo
+F001|4|4101|0.0|15000.0|Registro Venta
+F002|2|11011|150.0|0.0|Ingreso pruebaa
+F002|3|4101|0.0|150.0|
+F002|3|11011|14850.0|0.0|prueba
+F004|1|4101|2000.0|0.0|Probando
+F004|2|11011|0.0|2000.0|
+F004|2|4101|400.0|0.0|ff
+F004|3|4101|0.0|2400.0|Probando
