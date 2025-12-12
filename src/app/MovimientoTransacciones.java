@@ -16,7 +16,7 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
     public MovimientoTransacciones() {
         initComponents();
         setLocationRelativeTo(null); // centrar
-        
+
         // Debito / Credito mutuamente excluyentes
         txtDebitoLinea.addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
@@ -55,23 +55,6 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
             txtDebitoLinea.setEnabled(true);
         }
     }
-
-    
-    private void actualizarAreaDetalles(String nroDocu) {
-    java.util.List<model.DetalleTransaccion> detalles =
-            data.DetalleArchivo.cargarPorDocumento(nroDocu);
-
-    StringBuilder sb = new StringBuilder();
-    for (model.DetalleTransaccion d : detalles) {
-        sb.append(String.format("%s | %d | %s | D: %.2f | C: %.2f | %s%n",
-                d.getNroDoc(),
-                d.getSecuencia(),
-                d.getCuentaContable(),
-                d.getValorDebito(),
-                d.getValorCredito(),
-                d.getComentario()));
-    }
-}
 
 
     /**
@@ -338,6 +321,7 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
             txtDescripcion.setText("");
             txtHechoPor.setText("");
             txtMonto.setText("");
+
             javax.swing.JOptionPane.showMessageDialog(this,
                     "Documento no existe. Puede crearlo.",
                     "Información",
@@ -424,6 +408,8 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
                         "Cabecera creada correctamente.",
                         "Información",
                         javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                btnAgregarDetalle.setEnabled(true);
+
             } else {
                 javax.swing.JOptionPane.showMessageDialog(this,
                         "Ya existe una cabecera con ese número.",
@@ -462,6 +448,28 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
 
     private void btnAgregarDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarDetalleActionPerformed
         String nro = txtNroDocu.getText().trim();
+
+        if (nro.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Debe indicar un número de documento.",
+                    "Validación",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        model.CabeceraTransaccion cab =
+                data.CabeceraArchivo.buscarPorNumero(nro);
+
+        if (cab == null) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "No puede agregar detalles porque el documento NO existe.\n"
+                  + "Primero debe guardar la cabecera del documento.",
+                    "Validación",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            txtNroDocu.requestFocus();
+            return;
+        }
+        
         String cuenta = txtCuenta.getText().trim();
         String debitoTxt = txtDebitoLinea.getText().trim();
         String creditoTxt = txtCreditoLinea.getText().trim();

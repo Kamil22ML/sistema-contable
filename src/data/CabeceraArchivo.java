@@ -101,7 +101,33 @@ public class CabeceraArchivo {
         }
         return encontrada;
     }
+
     
+    public static int cerrarPorFecha(String fecha) {
+        java.util.List<model.CabeceraTransaccion> todos = cargarTodos();
+        int contador = 0;
+
+        // Fecha de actualización = hoy (misma fecha del cierre)
+        String fechaHoy = fecha;
+
+        for (model.CabeceraTransaccion c : todos) {
+
+            // Solo documentos PENDIENTES
+            if (c.isStatusActualizacion()) {
+                continue;
+            }
+
+            if (fecha.equals(c.getFechaDocu())) {
+                c.setFechaActualizacion(fechaHoy);
+                c.setStatusActualizacion(true);
+                contador++;
+            }
+        }
+
+        guardarLista(todos);
+        return contador;
+    }
+
     public static int cerrarPorRangoFechas(String desde, String hasta) {
         // Formato de fechas que estás usando en el sistema
         java.time.format.DateTimeFormatter f =

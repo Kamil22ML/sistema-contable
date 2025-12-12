@@ -26,6 +26,12 @@ public class CierreDiario extends javax.swing.JFrame {
     public CierreDiario() {
         initComponents();
         setLocationRelativeTo(null);
+        
+        java.time.format.DateTimeFormatter f = java.time.format.DateTimeFormatter.ofPattern("d/M/yyyy");
+
+        String hoy = java.time.LocalDate.now().format(f);
+
+        txtFechaHoy.setText(hoy);
     }
 
     /**
@@ -39,9 +45,7 @@ public class CierreDiario extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtDesde = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        txtHasta = new javax.swing.JTextField();
+        txtFechaHoy = new javax.swing.JTextField();
         btnEjecutar = new javax.swing.JButton();
         btnCerrar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -53,9 +57,9 @@ public class CierreDiario extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Cierre Diario");
 
-        jLabel2.setText("Desde");
+        jLabel2.setText("Fecha");
 
-        jLabel3.setText("Hasta");
+        txtFechaHoy.setEditable(false);
 
         btnEjecutar.setText("Ejecutar");
         btnEjecutar.addActionListener(this::btnEjecutarActionPerformed);
@@ -89,8 +93,6 @@ public class CierreDiario extends javax.swing.JFrame {
                         .addComponent(btnCerrar))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(120, 120, 120)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnEjecutar)))
                 .addGap(17, 17, 17))
@@ -98,9 +100,7 @@ public class CierreDiario extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(45, 45, 45)
-                        .addComponent(txtDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(60, 60, 60)
-                        .addComponent(txtHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtFechaHoy, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(15, 15, 15)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -114,12 +114,9 @@ public class CierreDiario extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3)
                     .addComponent(btnEjecutar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txtFechaHoy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -131,147 +128,74 @@ public class CierreDiario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjecutarActionPerformed
-        String desde = txtDesde.getText().trim();
-        String hasta = txtHasta.getText().trim();
+        String hoy = txtFechaHoy.getText().trim();
 
-        if (desde.isEmpty() || hasta.isEmpty()) {
+        if (hoy.isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(this,
-                    "Debe digitar las fechas Desde y Hasta.",
-                    "Validación",
-                    javax.swing.JOptionPane.WARNING_MESSAGE);
+                    "No se pudo obtener la fecha actual.",
+                    "Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Ejecutamos el cierre (marca estatus en las cabeceras)
-        int cerrados = data.CabeceraArchivo.cerrarPorRangoFechas(desde, hasta);
+        int cerrados = data.CabeceraArchivo.cerrarPorFecha(hoy);
 
         javax.swing.JOptionPane.showMessageDialog(this,
-                "Documentos cerrados: " + cerrados,
+                "Documentos cerrados hoy (" + hoy + "): " + cerrados,
                 "Cierre Diario",
                 javax.swing.JOptionPane.INFORMATION_MESSAGE);
 
-        // Mostrar SOLO cuentas que movieron algo
-        cargarMovimientosDelRango(desde, hasta);
+        // Mostrar SOLO cuentas con movimientos del día
+        cargarMovimientosDelDia(hoy);
     }//GEN-LAST:event_btnEjecutarActionPerformed
 
-    /**
-    * Muestra en tblResumen TODO el catálogo de cuentas
-    * y los débitos/créditos que ha tenido cada cuenta
-    * en el rango de fechas indicado.
-    */
-   private void cargarResumenRango(String desde, String hasta) {
-
-       DateTimeFormatter f = DateTimeFormatter.ofPattern("d/M/yyyy");
-       LocalDate d1 = LocalDate.parse(desde, f);
-       LocalDate d2 = LocalDate.parse(hasta, f);
-
-       // 1) Cargar cabeceras y detalles
-       List<model.CabeceraTransaccion> cabeceras = data.CabeceraArchivo.cargarTodos();
-       List<model.DetalleTransaccion> detalles = data.DetalleArchivo.cargarTodos();
-       List<model.CuentaContable> catalogo = data.CuentaArchivo.cargarTodas();
-
-       // 2) Determinar qué documentos están dentro del rango
-       Set<String> documentosEnRango = new HashSet<>();
-       for (model.CabeceraTransaccion c : cabeceras) {
-           LocalDate fechaDoc = LocalDate.parse(c.getFechaDocu(), f);
-           if (!fechaDoc.isBefore(d1) && !fechaDoc.isAfter(d2)) {
-               documentosEnRango.add(c.getNroDocu());
-           }
-       }
-
-       // 3) Acumular débitos y créditos por cuenta SOLO de esos documentos
-       Map<String, Double> debitos = new HashMap<>();
-       Map<String, Double> creditos = new HashMap<>();
-
-       for (model.DetalleTransaccion d : detalles) {
-           if (!documentosEnRango.contains(d.getNroDoc())) {
-               continue;
-           }
-           String cta = d.getCuentaContable();    // ajusta nombre si tu getter es distinto
-           debitos.merge(cta, d.getValorDebito(), Double::sum);
-           creditos.merge(cta, d.getValorCredito(), Double::sum);
-       }
-
-       // 4) Construir el modelo de la tabla usando TODO el catálogo
-       String[] columnas = {
-           "No. Cuenta", "Descripción",
-           "Débito periodo", "Crédito periodo", "Saldo periodo"
-       };
-
-       DefaultTableModel modelo = new DefaultTableModel(columnas, 0) {
-           @Override
-           public boolean isCellEditable(int row, int column) {
-               return false;
-           }
-       };
-
-       for (model.CuentaContable cta : catalogo) {
-           String numero = cta.getNumero();
-           String desc   = cta.getDescripcion();
-
-           double deb = debitos.getOrDefault(numero, 0.0);
-           double cre = creditos.getOrDefault(numero, 0.0);
-           double saldo = deb - cre; // saldo del periodo
-
-           Object[] fila = {
-               numero,
-               desc,
-               deb,
-               cre,
-               saldo
-           };
-           modelo.addRow(fila);
-       }
-
-       tblResumen.setModel(modelo);
-   }
-   
-   private void cargarMovimientosDelRango(String desde, String hasta) {
-
-        DateTimeFormatter f = DateTimeFormatter.ofPattern("d/M/yyyy");
-        LocalDate d1 = LocalDate.parse(desde, f);
-        LocalDate d2 = LocalDate.parse(hasta, f);
+    private void cargarMovimientosDelDia(String fecha) {
 
         // 1) Leer cabeceras y detalles
-        List<model.CabeceraTransaccion> cabeceras = data.CabeceraArchivo.cargarTodos();
-        List<model.DetalleTransaccion> detalles = data.DetalleArchivo.cargarTodos();
-        List<model.CuentaContable> catalogo = data.CuentaArchivo.cargarTodas();
+        java.util.List<model.CabeceraTransaccion> cabeceras = data.CabeceraArchivo.cargarTodos();
+        java.util.List<model.DetalleTransaccion> detalles = data.DetalleArchivo.cargarTodos();
+        java.util.List<model.CuentaContable> catalogo = data.CuentaArchivo.cargarTodas();
 
-        // 2) Filtrar documentos que están dentro del rango
-        Set<String> docsEnRango = new HashSet<>();
+        // 2) Documentos que son exactamente de esa fecha
+        java.util.Set<String> docsDelDia = new java.util.HashSet<>();
         for (model.CabeceraTransaccion c : cabeceras) {
-            LocalDate fecha = LocalDate.parse(c.getFechaDocu(), f);
-            if (!fecha.isBefore(d1) && !fecha.isAfter(d2)) {
-                docsEnRango.add(c.getNroDocu());
+            if (fecha.equals(c.getFechaDocu())) {
+                docsDelDia.add(c.getNroDocu());
             }
         }
 
-        // 3) Acumular débitos y créditos SOLO para cuentas con movimientos
-        Map<String, Double> debitos = new HashMap<>();
-        Map<String, Double> creditos = new HashMap<>();
+        // 3) Acumular débitos y créditos por cuenta SOLO de esos documentos
+        java.util.Map<String, Double> debitos = new java.util.HashMap<>();
+        java.util.Map<String, Double> creditos = new java.util.HashMap<>();
 
         for (model.DetalleTransaccion d : detalles) {
-            if (!docsEnRango.contains(d.getNroDoc())) continue;
+            if (!docsDelDia.contains(d.getNroDoc())) continue;
 
             String cuenta = d.getCuentaContable();
-
             debitos.merge(cuenta, d.getValorDebito(), Double::sum);
             creditos.merge(cuenta, d.getValorCredito(), Double::sum);
         }
 
-        // 4) Construir tabla SOLO con cuentas que se movieron
+        // 4) Tabla SOLO con cuentas que se movieron ese día
         String[] cols = { "No. Cuenta", "Descripción", "Débito", "Crédito", "Saldo" };
-        DefaultTableModel modelo = new DefaultTableModel(cols, 0) {
-            @Override
-            public boolean isCellEditable(int r, int c) { return false; }
-        };
+
+        javax.swing.table.DefaultTableModel modelo =
+                new javax.swing.table.DefaultTableModel(cols, 0) {
+                    @Override
+                    public boolean isCellEditable(int r, int c) { return false; }
+                };
+
+        double totalDeb = 0.0;
+        double totalCre = 0.0;
 
         for (String nroCuenta : debitos.keySet()) {
             double deb = debitos.getOrDefault(nroCuenta, 0.0);
             double cre = creditos.getOrDefault(nroCuenta, 0.0);
             double saldo = deb - cre;
 
-            // Encontrar la cuenta en el catálogo
+            totalDeb += deb;
+            totalCre += cre;
+
             String descripcion = "";
             for (model.CuentaContable c : catalogo) {
                 if (c.getNumero().equals(nroCuenta)) {
@@ -280,17 +204,15 @@ public class CierreDiario extends javax.swing.JFrame {
                 }
             }
 
-            modelo.addRow(new Object[]{
-                nroCuenta,
-                descripcion,
-                deb,
-                cre,
-                saldo
-            });
+            modelo.addRow(new Object[]{ nroCuenta, descripcion, deb, cre, saldo });
         }
+
+        // Fila de totales
+        modelo.addRow(new Object[]{ "TOTALES", "", totalDeb, totalCre, (totalDeb - totalCre) });
 
         tblResumen.setModel(modelo);
     }
+
 
 
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
@@ -328,10 +250,8 @@ public class CierreDiario extends javax.swing.JFrame {
     private javax.swing.JButton btnEjecutar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblResumen;
-    private javax.swing.JTextField txtDesde;
-    private javax.swing.JTextField txtHasta;
+    private javax.swing.JTextField txtFechaHoy;
     // End of variables declaration//GEN-END:variables
 }

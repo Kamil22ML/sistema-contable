@@ -33,8 +33,6 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <Component id="jLabel2" min="-2" pref="44" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="120" max="-2" attributes="0"/>
-                      <Component id="jLabel3" min="-2" pref="42" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btnEjecutar" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -45,9 +43,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                      <Component id="txtDesde" min="-2" pref="106" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
-                      <Component id="txtHasta" min="-2" pref="85" max="-2" attributes="0"/>
+                      <Component id="txtFechaHoy" min="-2" pref="106" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
@@ -66,14 +62,10 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnEjecutar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="txtDesde" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtHasta" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
+              <Component id="txtFechaHoy" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jScrollPane1" pref="139" max="32767" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -95,17 +87,13 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Desde"/>
+        <Property name="text" type="java.lang.String" value="Fecha"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtDesde">
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel3">
+    <Component class="javax.swing.JTextField" name="txtFechaHoy">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Hasta"/>
+        <Property name="editable" type="boolean" value="false"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtHasta">
     </Component>
     <Component class="javax.swing.JButton" name="btnEjecutar">
       <Properties>
