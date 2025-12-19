@@ -99,4 +99,16 @@ public class CuentaArchivo {
         }
         return encontrada;
     }
+        public static void guardarCatalogo(List<CuentaContable> lista) {
+            File file = new File(RUTA);
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, false))) {
+                for (CuentaContable c : lista) {
+                    bw.write(c.toLine());
+                    bw.newLine();
+                }
+            } catch (IOException e) {
+                System.out.println("Error escribiendo CatalogoCuentas.txt: " + e.getMessage());
+            }
+        }
+
 }

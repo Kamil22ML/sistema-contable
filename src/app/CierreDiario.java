@@ -11,6 +11,12 @@ import java.util.HashSet;
 import javax.swing.table.DefaultTableModel;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  *
@@ -43,20 +49,27 @@ public class CierreDiario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtFechaHoy = new javax.swing.JTextField();
         btnEjecutar = new javax.swing.JButton();
-        btnCerrar = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblResumen = new javax.swing.JTable();
+        btnCerrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Cierre Diario");
 
+        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 153, 153));
         jLabel2.setText("Fecha");
 
         txtFechaHoy.setEditable(false);
@@ -64,8 +77,39 @@ public class CierreDiario extends javax.swing.JFrame {
         btnEjecutar.setText("Ejecutar");
         btnEjecutar.addActionListener(this::btnEjecutarActionPerformed);
 
-        btnCerrar.setText("Cerrar");
-        btnCerrar.addActionListener(this::btnCerrarActionPerformed);
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(101, 101, 101))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(txtFechaHoy, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnEjecutar)
+                .addGap(57, 57, 57))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(btnEjecutar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtFechaHoy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
+        jPanel2.setBackground(new java.awt.Color(0, 153, 153));
 
         tblResumen.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -80,55 +124,58 @@ public class CierreDiario extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblResumen);
 
+        btnCerrar.setBackground(new java.awt.Color(255, 51, 51));
+        btnCerrar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnCerrar.setForeground(new java.awt.Color(255, 255, 255));
+        btnCerrar.setText("Cerrar");
+        btnCerrar.addActionListener(this::btnCerrarActionPerformed);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCerrar)
+                .addGap(14, 14, 14))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnCerrar)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnCerrar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEjecutar)))
-                .addGap(17, 17, 17))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addComponent(txtFechaHoy, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(btnEjecutar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtFechaHoy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnCerrar)
-                .addGap(19, 19, 19))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjecutarActionPerformed
-        String hoy = txtFechaHoy.getText().trim();
+            String hoy = txtFechaHoy.getText().trim();
 
         if (hoy.isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(this,
@@ -138,16 +185,154 @@ public class CierreDiario extends javax.swing.JFrame {
             return;
         }
 
+        // 1) Actualizar catálogo con movimientos del día (evita doble cierre)
+        int movs = actualizarCatalogoConMovimientosDelDia(hoy);
+
+        // 2) Cerrar cabeceras del día
         int cerrados = data.CabeceraArchivo.cerrarPorFecha(hoy);
 
-        javax.swing.JOptionPane.showMessageDialog(this,
-                "Documentos cerrados hoy (" + hoy + "): " + cerrados,
-                "Cierre Diario",
-                javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        // 3) Mensaje dinámico
+        if (movs == 0) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Cierre diario (" + hoy + ")\n"
+                  + "No hay documentos pendientes para aplicar hoy (ya fueron aplicados).\n"
+                  + "Documentos cerrados: " + cerrados,
+                    "Cierre Diario",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Cierre diario ejecutado (" + hoy + ")\n"
+                  + "Movimientos aplicados al catálogo: " + movs + "\n"
+                  + "Documentos cerrados: " + cerrados,
+                    "Cierre Diario",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        }
 
-        // Mostrar SOLO cuentas con movimientos del día
+        // 4) Mostrar SOLO cuentas con movimientos del día
         cargarMovimientosDelDia(hoy);
     }//GEN-LAST:event_btnEjecutarActionPerformed
+    // Archivo de control para no aplicar el mismo documento dos veces al catálogo
+    private static final String RUTA_CIERRE_CONTROL = "data/CierreDiarioAplicados.txt";
+
+    private Set<String> cargarDocsYaAplicados(String fecha) {
+        Set<String> set = new HashSet<>();
+        File file = new File(RUTA_CIERRE_CONTROL);
+        if (!file.exists()) return set;
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                line = line.trim();
+                if (line.isEmpty()) continue;
+                // formato: fecha|nroDoc
+                String[] p = line.split("\\|");
+                if (p.length >= 2) {
+                    String f = p[0].trim();
+                    String doc = p[1].trim();
+                    if (f.equals(fecha) && !doc.isEmpty()) {
+                        set.add(doc);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error leyendo control de cierre: " + e.getMessage());
+        }
+        return set;
+    }
+
+    private void registrarDocsAplicados(String fecha, Set<String> docsAplicadosNuevos) {
+        if (docsAplicadosNuevos == null || docsAplicadosNuevos.isEmpty()) return;
+
+        File file = new File(RUTA_CIERRE_CONTROL);
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, true))) {
+            for (String doc : docsAplicadosNuevos) {
+                bw.write(fecha + "|" + doc);
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Error escribiendo control de cierre: " + e.getMessage());
+        }
+    }
+
+    private void aplicarMovimientoCuentaYPadres(
+        Map<String, model.CuentaContable> mapa,
+            String cuentaInicial,
+            double deb,
+            double cre
+    ) {
+        String cuenta = cuentaInicial;
+
+        while (cuenta != null && !cuenta.trim().isEmpty()) {
+            model.CuentaContable c = mapa.get(cuenta);
+            if (c == null) break;
+
+            c.setDebitoAcum(c.getDebitoAcum() + deb);
+            c.setCreditoAcum(c.getCreditoAcum() + cre);
+            c.setBalance(c.getDebitoAcum() - c.getCreditoAcum());
+
+            String padre = c.getPadre();
+            if (padre == null || padre.trim().isEmpty()) break;
+
+            cuenta = padre.trim();
+        }
+    }
+
+    private int actualizarCatalogoConMovimientosDelDia(String fecha) {
+        List<model.CabeceraTransaccion> cabeceras = data.CabeceraArchivo.cargarTodos();
+        List<model.DetalleTransaccion> detalles = data.DetalleArchivo.cargarTodos();
+        List<model.CuentaContable> catalogo = data.CuentaArchivo.cargarTodas();
+
+        // Map para acceso rápido por número de cuenta
+        Map<String, model.CuentaContable> mapa = new HashMap<>();
+        for (model.CuentaContable c : catalogo) {
+            mapa.put(c.getNumero(), c);
+        }
+
+        // ✅ docs ya aplicados hoy (para evitar doble suma)
+        Set<String> yaAplicados = cargarDocsYaAplicados(fecha);
+
+        // documentos del día, PERO solo los que aún no han sido aplicados
+        Set<String> docsPendientes = new HashSet<>();
+        for (model.CabeceraTransaccion c : cabeceras) {
+            if (fecha.equals(c.getFechaDocu())) {
+                String doc = c.getNroDocu();
+                if (doc != null) doc = doc.trim();
+                if (doc != null && !doc.isEmpty() && !yaAplicados.contains(doc)) {
+                    docsPendientes.add(doc);
+                }
+            }
+        }
+
+        int movimientosAplicados = 0;
+
+        // aplicar movimientos a cuenta y padres SOLO de docs pendientes
+        for (model.DetalleTransaccion d : detalles) {
+            if (!docsPendientes.contains(d.getNroDoc())) continue;
+
+            String cuenta = d.getCuentaContable();
+            double deb = d.getValorDebito();
+            double cre = d.getValorCredito();
+
+            if (cuenta == null || cuenta.trim().isEmpty()) continue;
+
+            aplicarMovimientoCuentaYPadres(mapa, cuenta.trim(), deb, cre);
+            movimientosAplicados++;
+        }
+
+        // si no hubo docs pendientes, no reescribas ni registres nada
+        if (docsPendientes.isEmpty()) {
+            return 0;
+        }
+
+        // guardar catálogo actualizado
+        data.CuentaArchivo.guardarCatalogo(catalogo);
+
+        // marcar docs como aplicados (idempotencia)
+        registrarDocsAplicados(fecha, docsPendientes);
+
+        return movimientosAplicados;
+    }
+
 
     private void cargarMovimientosDelDia(String fecha) {
 
@@ -188,7 +373,10 @@ public class CierreDiario extends javax.swing.JFrame {
         double totalDeb = 0.0;
         double totalCre = 0.0;
 
-        for (String nroCuenta : debitos.keySet()) {
+        java.util.List<String> cuentas = new java.util.ArrayList<>(debitos.keySet());
+        java.util.Collections.sort(cuentas);
+
+        for (String nroCuenta : cuentas) {
             double deb = debitos.getOrDefault(nroCuenta, 0.0);
             double cre = creditos.getOrDefault(nroCuenta, 0.0);
             double saldo = deb - cre;
@@ -250,6 +438,8 @@ public class CierreDiario extends javax.swing.JFrame {
     private javax.swing.JButton btnEjecutar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblResumen;
     private javax.swing.JTextField txtFechaHoy;

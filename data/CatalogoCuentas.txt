@@ -1,207 +1,202 @@
-﻿NO. CUENTA|NOMBRE DE LA CUENTA|TIPO (GENERAL O DETALLE)|NIVEL|PADRE|GRUPO|CONCILIABLE|GRUPO DEL FLUJO DE EFECTIVO
-1|Activos|GENERAL|1||Activo||Ninguno
-11| Activos Circulantes|GENERAL|2|1|Activo||Ninguno
-1101|   Efectivo en Caja|GENERAL|3|11|Activo||Ninguno
-11011|    Caja Chica|DETALLE|4|1101|Activo|Si|Efectivo
-1102|   Efectivo en Bancos|GENERAL|3|11|Activo||Ninguno
-11021|     Banco Popular Dominicano|DETALLE|4|1102|Activo|Si|Efectivo
-11022|      Banco BHD|DETALLE|4|1102|Activo|Si|Efectivo
-11023|      Banco Santa Cruz|DETALLE|4|1102|Activo|Si|Efectivo
-11025|    Cuenta de Nόmina|DETALLE|4|1102|Activo|Si|Efectivo
-11026|    Cuenta de Ahorros|DETALLE|4|1102|Activo|Si|Efectivo
-1103|   Fondos en Caja|GENERAL|3|11|Activo|Si|Ninguno
-11031|    Fondo para Caja Registradora|DETALLE|4|1103|Activo|Si|Operativo
-1104|   Valores Negociables|GENERAL|3|11|Activo||Ninguno
-11041|    Depósitos a Plazo Fijo|DETALLE|4|1104|Activo||Inversiones
-11042|    Intereses por Cobrar|DETALLE|4|1104|Activo||Inversiones
-1105|   Cuentas por Cobrar|GENERAL|3|11|Activo||Ninguno
-11051|   Cuentas por Cobrar (Interfaz)|DETALLE|4|1105|Activo||Operativo
-11052|    Cuentas por Cobrar Clientes|DETALLE|4|1105|Activo||Operativo
-11053|    Cuentas por Cobrar Empleados|DETALLE|4|1105|Activo||Operativo
-11054|    Cuentas por Cobrar Funcionarios|DETALLE|4|1105|Activo||Operativo
-11055|    Reserva para Cuentas Dudosas|DETALLE|4|1105|Activo||Operativo
-1106|    Materiales e Insumos|GENERAL|3|11|Activo||Ninguno
-11061|    Materiales de Oficina|DETALLE|4|1106|Activo||Operativo
-11062|    Insumos Odontológico |DETALLE|4|1106|Activo||Operativo
-11063|    Materiales de Limpieza|DETALLE|4|1106|Activo||
-1107|   Gastos  Pagados P/Adelantados|GENERAL|3|11|Activo||Ninguno
-11071|   Seguros Pagados por Adelantado|DETALLE|4|1107|Activo||Operativo
-11072|   Alquileres Pagados por Adelantado|DETALLE|4|1107|Activo||Operativo
-12|Activos Fijos|GENERAL|2||Activo||
-120|"Propiedad| Planta y Equipos "|GENERAL|2|1|Activo||Ninguno
-1201|   Activos no Depreciables|GENERAL|3|12|Activo||Ninguno
-12011|   Terreno|DETALLE|4|1201|Activo||Inversiones
-12012|   Construcciones en Proceso|DETALLE|4|1201|Activo||Inversiones
-1202|   Activos de la Categoría I|GENERAL|3|12|Activo||Ninguno
-12021|   Edificio|DETALLE|4|1202|Activo||Inversiones
-12022|   Deprec. Acumulada - Activo Categoría I|DETALLE|4|1202|Activo||Ninguno
-1203|   Activos de la Categoría II|GENERAL|3|12|Activo||Ninguno
-12031|   Mobiliario  |DETALLE|4|1203|Activo||Inversiones
-12033|   Equipos de Oficina|DETALLE|4|1203|||Inversiones
-12035|   Equipos de Cómputos y Comunicaciones|DETALLE|4|1203|Activo||Ninguno
-12037|   Equipos de Transportes Livianos|DETALLE|4|1203|Activo||Ninguno
-12038|   Deprec. Acumulada Activo Categoría II|DETALLE|4|1203|Activo||Ninguno
-1204|   Activos de la Categoría III|GENERAL|3|12|Activo||Ninguno
-12041|   Equipos Odontológico|DETALLE|4|1204|Activo||Inversiones
-12043|   Instrumental Odontológico|GENERAL|4|1204|Activo||Ninguno
-12044|   Maquinaria y Equipos|GENERAL|4|1204|Activo||Ninguno
-12045|   Otros Activos Depreciables|DETALLE|4|1204|Activo||Ninguno
-12046|   Deprec. Acumulada Activo Cateroría III|DETALLE|4|1204|Activo||Ninguno
-13|Pagos Anticipados|GENERAL|2|1|Activo||Ninguno
-1301|   Impuestos Anticipados|GENERAL|3|13|Activo||Ninguno
-13011|   ITBIS Avanzado en Compras|DETALLE|4|1301|Activo||Operativo
-13012|   Anticipos ISR|DETALLE|4|1301|Activo||Operativo
-14|Activos Diferidos|GENERAL|2|1|Activo||Ninguno
-1401|   Mejoras a Local Arrendado|DETALLE|3|14|Activo||Inversiones
-1402|   Amortizaciόn Mejoras Local Arrendado|DETALLE|3|14|Activo||Ninguno
-1403|   Organización y Constitución de Compañía|DETALLE|3|14|Activo||Inversiones
-1404|   Amortización Organiz. y Const. de Cía.|DETALLE|3|14|Activo||Ninguno
-1405|   Estudio y Evaluación de Proyectos|DETALLE|3|14|Activo||Inversiones
-1406|   Amortización Estudio y Eval. de Proyecto|DETALLE|3|14|Activo||Ninguno
-1407|   Licencia de Softwere|DETALLE|3|14|Activo||Ninguno
-1408|   Depósitos y Fianzas|DETALLE|3|14|Activo||Ninguno
-2|Pasivos|GENERAL|1||Pasivo||Ninguno
-21| Pasivos a Corto Plazo|GENERAL|2|2|Pasivo||Ninguno
-2101|   Cuentas por Pagar Interfaz|DETALLE|3|21|Pasivo||Operativo
-2102|   Cuentas por Pagar Proveedores|DETALLE|3|21|Pasivo||Operativo
-2103|    Provisiones por Pagar|GENERAL|3|21|Pasivo||Ninguno
-210301|   Provisiόn para Salario de Navidad|DETALLE|4|2103|Pasivo||Ninguno
-210302|   Provisiόn para Vacaciones|DETALLE|4|2103|Pasivo||Ninguno
-210303|   Provisiόn para Prestaciones Laborales|DETALLE|4|2103|Pasivo||Ninguno
-210304|    Provisiόn para Bonificación|DETALLE|4|2103|Pasivo||Ninguno
-210305|   Provisiones ISR|DETALLE|4|2103|Pasivo||Ninguno
-2104|   Impuesto por Pagar|GENERAL|3|21|Pasivo||Ninguno
-21041|    Deducciones Salariales|GENERAL|4|2104|Pasivo||Ninguno
-210411|     Retenciones ISR Empleados |DETALLE|5|21041|Pasivo||Operativo
-210412|     Retenciones ISR Trabajos Independientes|DETALLE|5|21041|Pasivo||Operativo
-210413|     Retenciones SVDS|DETALLE|5|21041|Pasivo||Operativo
-210414|     Retenciones SFS|DETALLE|5|21041|Pasivo||Operativo
-210415|     Retención Seguro Social|DETALLE|5|21041|Pasivo||Operativo
-210416|     Retención INFOTEP (0.50% Bonificación)|DETALLE|5|21041|Pasivo||Operativo
-210417|     Otras Retenciones por Pagar|DETALLE|5|21041|Pasivo||Operativo
-21042|    Impuestos Sobre Ventas|GENERAL|4|2104|Pasivo||Ninguno
-210421|     ITBIS Retenido Sobre Ventas|DETALLE|5|21042|Pasivo||Operativo
-21043|    Impuestos a la Propiedad|DETALLE|4|2104|Pasivo||Operativo
-21044|Impuestos Cont. Residuo Sólido por Pagar|DETALLE|4|2104|Pasivo||Operativo
-2105|Acumulaciones por Pagar|GENERAL|3|21|Pasivo||Ninguno
-210501|  Intereses por Pagar|DETALLE|4|2105|Pasivo||Ninguno
-210502|Gastos Acumulados por Pagar|DETALLE|4|2105|Pasivo||Ninguno
-2106|Tarjeta de Crédito|GENERAL|3|21|Pasivo||Ninguno
-210601|Tarjeta de Crédito por Pagar|DETALLE|4|2106|Pasivo||Ninguno
-210602|Otras Cuentas por Pagar|DETALLE|4|2106|Pasivo||Ninguno
-22|  Pasivos a Largo Plazo|GENERAL|2|2|Pasivo||Ninguno
-2201|   Documentos por Pagar|DETALLE|3|22|Pasivo||Financiero
-3|Capital|GENERAL|1||Capital||Ninguno
-31|  Capital Invertido|GENERAL|2|3|Capital||Ninguno
-3101|   Capital Social|DETALLE|3|31|Capital||Financiero
-3102|   Dividendos|DETALLE|3|31|Capital||Financiero
-32|  Utilidades del Periodo|GENERAL|2|3|Capital||Operativo
-3201|Utilidades Retenidas|DETALLE|3|32|Capital||Operativo
-3202|Ganancias Y/O Pérdidas|DETALLE|4|32|Capital||Operativo
-3203|Reserva Legal|DETALLE|5|32|Capital||Operativo
-4|Ingresos|GENERAL|1||Ingresos||Ninguno
-41| Ingresos por Servicios|GENERAL|2|4|Ingresos||Ninguno
-4101|   Ingresos por Servicios-Interfaz|DETALLE|3|41|Ingresos||Ninguno
-42|  Otros Ingresos|GENERAL|2|4|Ingresos||Ninguno
-4201|  Comisiones por Cobros de Servicios|DETALLE|3|42|Ingresos||Ninguno
-43|   Ingresos Financieros|GENERAL|2|4|Ingresos||Ninguno
-4301|   Intereses por Inversiones |DETALLE|3|43|Ingresos||Ninguno
-4302|   Intereses Ganados en Cuentas Corrientes|DETALLE|3|43|Ingresos||Ninguno
-4303|   Dividendos|DETALLE|3|43|Ingresos||Ninguno
-4304|   Descuentos Obtorgado|DETALLE|3|43|Ingresos||Ninguno
-51|    Devoluciones y Descuentos|GENERAL|3||||
-5101|    Devoluciones y Descuentos de Materiales|GENERAL|3||||
-51013|   Devoluciones sobre Compras de Materiales|DETALLE|4|5101|Gastos||Ninguno
-51014|   Descuentos Sobre Compras de Materiales|DETALLE|4|5101|Gastos||Ninguno
-52| Gastos Generales y Administrativos|GENERAL|2|5|Gastos||Ninguno
-5201|   Nόmina|GENERAL|3|52|Gastos||Ninguno
-52011|    Sueldos|GENERAL|4|5201|Gastos||Ninguno
-520111|     Gastos de Sueldos Empleados y Funcionario|DETALLE|5|52011|Gastos||Ninguno
-520112|     Incentivos|DETALLE|5|52011|Gastos||Ninguno
-520113|     Horas Extras|DETALLE|5|52011|Gastos||Ninguno
-520114|     Comisiones|DETALLE|5|52011|Gastos||Ninguno
-520115|     Mano de Obra por Contrato|DETALLE|5|52011|Gastos||Ninguno
-52012|    Beneficios a los Empleados|GENERAL|4|5201|Gastos||Ninguno
-520121|     Seguro Médico y Dental|DETALLE|5|52012|Gastos||Ninguno
-520122|     Salario de Navidad|DETALLE|5|52012|Gastos||Ninguno
-520123|     Vacaciones|DETALLE|5|52012|Gastos||Ninguno
-520124|      Bonificación|DETALLE|5|52012|Gastos||Ninguno
-520125|     Otros Beneficios a Empleados|DETALLE|5|52012|Gastos||Ninguno
-52013|    Aportes Patronal|GENERAL|4|5201|Gastos||Ninguno
-520131|    Aportes a Instituciones Estatales|GENERAL|5|52013|Gastos||Ninguno
-5201311|     Seguro Social|DETALLE|6|5.00E+05|Gastos||Ninguno
-5201312|SVDS|DETALLE|6|5.00E+05|Gastos||Ninguno
-5201313|SFS|DETALLE|6|5.00E+05|Gastos||Ninguno
-5201314|INFOTEP|DETALLE|6|5.00E+05|Gastos||Ninguno
-5201315|    Riesgos Laborales|DETALLE|6|5.00E+05|Gastos||Ninguno
-5202| Gastos de Mantenimiento|GENERAL|3|52|Gastos||Ninguno
-52021|  Activos de la Categoría I|DETALLE|4|5202|Gastos||Ninguno
-52022|  Activos de la Categoría II|DETALLE|4|5202|Gastos||Ninguno
-52023|  Activos de la Categoría III|DETALLE|4|5202|Gastos||Ninguno
-5203| Gastos de Depreciaciόn|GENERAL|3|52|Gastos||Ninguno
-52031|  Activos de la Categoría I|DETALLE|4|5203|Gastos||Ninguno
-52032|  Activos de la Categoría II|DETALLE|4|5203|Gastos||Ninguno
-52033|  Activos de la Categoría III|DETALLE|4|5203|Gastos||Ninguno
-5204| Amortizaciόn|GENERAL|3|52|Gastos||Ninguno
-52041|  Mejoras a Arrendamientos|DETALLE|4|5204|Gastos||Ninguno
-52042|  Gastos de Organizaciόn|DETALLE|4|5204|Gastos||Ninguno
-5205| Alquileres  y Arrendamientos|GENERAL|3|52|Gastos||Ninguno
-52051|  Activos de la categoría I Gastos de Alquileres)|DETALLE|4|5205|Gastos||Ninguno
-52052|  Activos de la categoría II|DETALLE|4|5205|Gastos||Ninguno
-52053|  Activos de la categoría III|DETALLE|4|5205|Gastos||Ninguno
-5206| Seguros|GENERAL|3|52|Gastos||Ninguno
-52061|  Vehículos|DETALLE|4|5206|Gastos||Ninguno
-52062|  Negocio en General|DETALLE|4|5206|Gastos||Ninguno
-52063|  Seguro de Vida|DETALLE|4|5206|Gastos||Ninguno
-5207|Gastos de Publicidad|GENERAL|3|52|Gastos||Ninguno
-52071|   En Radio|DETALLE|4|5207|Gastos||Ninguno
-52072|   En Televisión|DETALLE|4|5207|Gastos||Ninguno
-52073|   En Periódicos|DETALLE|4|5207|Gastos||Ninguno
-52074|   En Letreros y Afiches|DETALLE|4|5207|Gastos||Ninguno
-5209|Impuestos (Otros)|GENERAL|3|52|Gastos||Ninguno
-52091|Impuestos Ventas/Compras|DETALLE|4|5209|Gastos||Ninguno
-52092|Impuestos a la Propiedad|DETALLE|4|5209|Gastos||Ninguno
-52093|Impuestos a la Cont. Residuo Sólido IR-2-ISFL|DETALLE|4|5209|Gastos||Ninguno
-520115|     Mano de Obra por Contrato|DETALLE|5|52011|Gastos||Ninguno
-52012|    Beneficios a los Empleados|GENERAL|4|5201|Gastos||Ninguno
-520121|     Seguro Médico y Dental|DETALLE|5|52012|Gastos||Ninguno
-520122|     Salario de Navidad|DETALLE|5|52012|Gastos||Ninguno
-520123|     Vacaciones|DETALLE|5|52012|Gastos||Ninguno
-520124|      Bonificación|DETALLE|5|52012|Gastos||Ninguno
-520125|     Otros Beneficios a Empleados|DETALLE|5|52012|Gastos||Ninguno
-52013|    Aportes Patronal|GENERAL|4|5201|Gastos||Ninguno
-520131|    Aportes a Instituciones Estatales|GENERAL|5|52013|Gastos||Ninguno
-5201311|     Seguro Social|DETALLE|6|5.00E+05|Gastos||Ninguno
-5201312|SVDS|DETALLE|6|5.00E+05|Gastos||Ninguno
-5201313|SFS|DETALLE|6|5.00E+05|Gastos||Ninguno
-5201314|INFOTEP|DETALLE|6|5.00E+05|Gastos||Ninguno
-5201315|    Riesgos Laborales|DETALLE|6|5.00E+05|Gastos||Ninguno
-5202| Gastos de Mantenimiento|GENERAL|3|52|Gastos||Ninguno
-52021|  Activos de la Categoría I|DETALLE|4|5202|Gastos||Ninguno
-52022|  Activos de la Categoría II|DETALLE|4|5202|Gastos||Ninguno
-52023|  Activos de la Categoría III|DETALLE|4|5202|Gastos||Ninguno
-5203| Gastos de Depreciaciόn|GENERAL|3|52|Gastos||Ninguno
-52031|  Activos de la Categoría I|DETALLE|4|5203|Gastos||Ninguno
-52032|  Activos de la Categoría II|DETALLE|4|5203|Gastos||Ninguno
-52033|  Activos de la Categoría III|DETALLE|4|5203|Gastos||Ninguno
-5204| Amortizaciόn|GENERAL|3|52|Gastos||Ninguno
-52041|  Mejoras a Arrendamientos|DETALLE|4|5204|Gastos||Ninguno
-52042|  Gastos de Organizaciόn|DETALLE|4|5204|Gastos||Ninguno
-5205| Alquileres  y Arrendamientos|GENERAL|3|52|Gastos||Ninguno
-52051|  Activos de la categoría I Gastos de Alquileres)|DETALLE|4|5205|Gastos||Ninguno
-52052|  Activos de la categoría II|DETALLE|4|5205|Gastos||Ninguno
-52053|  Activos de la categoría III|DETALLE|4|5205|Gastos||Ninguno
-5206| Seguros|GENERAL|3|52|Gastos||Ninguno
-52061|  Vehículos|DETALLE|4|5206|Gastos||Ninguno
-52062|  Negocio en General|DETALLE|4|5206|Gastos||Ninguno
-52063|  Seguro de Vida|DETALLE|4|5206|Gastos||Ninguno
-5207|Gastos de Publicidad|GENERAL|3|52|Gastos||Ninguno
-52071|   En Radio|DETALLE|4|5207|Gastos||Ninguno
-52072|   En Televisión|DETALLE|4|5207|Gastos||Ninguno
-52073|   En Periódicos|DETALLE|4|5207|Gastos||Ninguno
-52074|   En Letreros y Afiches|DETALLE|4|5207|Gastos||Ninguno
-5209|Impuestos (Otros)|GENERAL|3|52|Gastos||Ninguno
-52091|Impuestos Ventas/Compras|DETALLE|4|5209|Gastos||Ninguno
-52092|Impuestos a la Propiedad|DETALLE|4|5209|Gastos||Ninguno
-52093|Impuestos a la Cont. Residuo Sólido IR-2-ISFL|DETALLE|4|5209|Gastos||Ninguno
-|||||||
+﻿1|Activos|G|1||Activo|0|0|0
+11|Activos Circulantes|G|2|1|Activo|0|0|0
+1101|Efectivo en Caja|G|3|11|Activo|0|0|0
+11011|Caja Chica|D|4|1101|Activo|0|0|0
+1102|Efectivo en Bancos|G|3|11|Activo|0|0|0
+11021|Banco Popular Dominicano|D|4|1102|Activo|0|0|0
+11022|Banco BHD|D|4|1102|Activo|0|0|0
+11023|Banco Santa Cruz|D|4|1102|Activo|0|0|0
+11025|Cuenta de Nόmina|D|4|1102|Activo|0|0|0
+11026|Cuenta de Ahorros|D|4|1102|Activo|0|0|0
+1103|Fondos en Caja|G|3|11|Activo|0|0|0
+11031|Fondo para Caja Registradora|D|4|1103|Activo|0|0|0
+1104|Valores Negociables|G|3|11|Activo|0|0|0
+11041|Depósitos a Plazo Fijo|D|4|1104|Activo|0|0|0
+11042|Intereses por Cobrar|D|4|1104|Activo|0|0|0
+1105|Cuentas por Cobrar|G|3|11|Activo|0|0|0
+11051|Cuentas por Cobrar (Interfaz)|D|4|1105|Activo|0|0|0
+11052|Cuentas por Cobrar Clientes|D|4|1105|Activo|0|0|0
+11053|Cuentas por Cobrar Empleados|D|4|1105|Activo|0|0|0
+11054|Cuentas por Cobrar Funcionarios|D|4|1105|Activo|0|0|0
+11055|Reserva para Cuentas Dudosas|D|4|1105|Activo|0|0|0
+1106|Materiales e Insumos|G|3|11|Activo|0|0|0
+11061|Materiales de Oficina|D|4|1106|Activo|0|0|0
+11062|Insumos Odontológico|D|4|1106|Activo|0|0|0
+11063|Materiales de Limpieza|D|4|1106|Activo|0|0|0
+1107|Gastos  Pagados P/Adelantados|G|3|11|Activo|0|0|0
+11071|Seguros Pagados por Adelantado|D|4|1107|Activo|0|0|0
+11072|Alquileres Pagados por Adelantado|D|4|1107|Activo|0|0|0
+12|Activos Fijos|G|2||Activo|0|0|0
+1201|Activos no Depreciables|G|120|12|Activo|0|0|0
+12011|Terreno|D|4|1201|Activo|0|0|0
+12012|Construcciones en Proceso|D|4|1201|Activo|0|0|0
+1202|Activos de la Categoría I|G|3|12|Activo|0|0|0
+12021|Edificio|D|4|1202|Activo|0|0|0
+12022|Deprec. Acumulada - Activo Categoría I|D|4|1202|Activo|0|0|0
+1203|Activos de la Categoría II|G|3|12|Activo|0|0|0
+12031|Mobiliario|D|4|1203|Activo|0|0|0
+12033|Equipos de Oficina|D|4|1203||0|0|0
+12035|Equipos de Cómputos y Comunicaciones|D|4|1203|Activo|0|0|0
+12037|Equipos de Transportes Livianos|D|4|1203|Activo|0|0|0
+12038|Deprec. Acumulada Activo Categoría II|D|4|1203|Activo|0|0|0
+1204|Activos de la Categoría III|G|3|12|Activo|0|0|0
+12041|Equipos Odontológico|D|4|1204|Activo|0|0|0
+12043|Instrumental Odontológico|G|4|1204|Activo|0|0|0
+12044|Maquinaria y Equipos|G|4|1204|Activo|0|0|0
+12045|Otros Activos Depreciables|D|4|1204|Activo|0|0|0
+12046|Deprec. Acumulada Activo Cateroría III|D|4|1204|Activo|0|0|0
+13|Pagos Anticipados|G|2|1|Activo|0|0|0
+1301|Impuestos Anticipados|G|3|13|Activo|0|0|0
+13011|ITBIS Avanzado en Compras|D|4|1301|Activo|0|0|0
+13012|Anticipos ISR|D|4|1301|Activo|0|0|0
+14|Activos Diferidos|G|2|1|Activo|0|0|0
+1401|Mejoras a Local Arrendado|D|3|14|Activo|0|0|0
+1402|Amortizaciόn Mejoras Local Arrendado|D|3|14|Activo|0|0|0
+1403|Organización y Constitución de Compañía|D|3|14|Activo|0|0|0
+1404|Amortización Organiz. y Const. de Cía.|D|3|14|Activo|0|0|0
+1405|Estudio y Evaluación de Proyectos|D|3|14|Activo|0|0|0
+1406|Amortización Estudio y Eval. de Proyecto|D|3|14|Activo|0|0|0
+1407|Licencia de Softwere|D|3|14|Activo|0|0|0
+1408|Depósitos y Fianzas|D|3|14|Activo|0|0|0
+2|Pasivos|G|1||Pasivo|0|0|0
+21|Pasivos a Corto Plazo|G|2|2|Pasivo|0|0|0
+2101|Cuentas por Pagar Interfaz|D|3|21|Pasivo|0|0|0
+2102|Cuentas por Pagar Proveedores|D|3|21|Pasivo|0|0|0
+2103|Provisiones por Pagar|G|3|21|Pasivo|0|0|0
+210301|Provisiόn para Salario de Navidad|D|4|2103|Pasivo|0|0|0
+210302|Provisiόn para Vacaciones|D|4|2103|Pasivo|0|0|0
+210303|Provisiόn para Prestaciones Laborales|D|4|2103|Pasivo|0|0|0
+210304|Provisiόn para Bonificación|D|4|2103|Pasivo|0|0|0
+210305|Provisiones ISR|D|4|2103|Pasivo|0|0|0
+2104|Impuesto por Pagar|G|3|21|Pasivo|0|0|0
+21041|Deducciones Salariales|G|4|2104|Pasivo|0|0|0
+210411|Retenciones ISR Empleados|D|5|21041|Pasivo|0|0|0
+210412|Retenciones ISR Trabajos Independientes|D|5|21041|Pasivo|0|0|0
+210413|Retenciones SVDS|D|5|21041|Pasivo|0|0|0
+210414|Retenciones SFS|D|5|21041|Pasivo|0|0|0
+210415|Retención Seguro Social|D|5|21041|Pasivo|0|0|0
+210416|Retención INFOTEP (0.50% Bonificación)|D|5|21041|Pasivo|0|0|0
+210417|Otras Retenciones por Pagar|D|5|21041|Pasivo|0|0|0
+21042|Impuestos Sobre Ventas|G|4|2104|Pasivo|0|0|0
+210421|ITBIS Retenido Sobre Ventas|D|5|21042|Pasivo|0|0|0
+21043|Impuestos a la Propiedad|D|4|2104|Pasivo|0|0|0
+21044|Impuestos Cont. Residuo Sólido por Pagar|D|4|2104|Pasivo|0|0|0
+2105|Acumulaciones por Pagar|G|3|21|Pasivo|0|0|0
+210501|Intereses por Pagar|D|4|2105|Pasivo|0|0|0
+210502|Gastos Acumulados por Pagar|D|4|2105|Pasivo|0|0|0
+2106|Tarjeta de Crédito|G|3|21|Pasivo|0|0|0
+210601|Tarjeta de Crédito por Pagar|D|4|2106|Pasivo|0|0|0
+210602|Otras Cuentas por Pagar|D|4|2106|Pasivo|0|0|0
+22|Pasivos a Largo Plazo|G|2|2|Pasivo|0|0|0
+2201|Documentos por Pagar|D|3|22|Pasivo|0|0|0
+3|Capital|G|1||Capital|0|0|0
+31|Capital Invertido|G|2|3|Capital|0|0|0
+3101|Capital Social|D|3|31|Capital|0|0|0
+3102|Dividendos|D|3|31|Capital|0|0|0
+32|Utilidades del Periodo|G|2|3|Capital|0|0|0
+3201|Utilidades Retenidas|D|3|32|Capital|0|0|0
+3202|Ganancias Y/O Pérdidas|D|4|32|Capital|0|0|0
+3203|Reserva Legal|D|5|32|Capital|0|0|0
+4|Ingresos|G|1||Ingresos|0|0|0
+41|Ingresos por Servicios|G|2|4|Ingresos|0|0|0
+4101|Ingresos por Servicios-Interfaz|D|3|41|Ingresos|0|0|0
+42|Otros Ingresos|G|2|4|Ingresos|0|0|0
+4201|Comisiones por Cobros de Servicios|D|3|42|Ingresos|0|0|0
+43|Ingresos Financieros|G|2|4|Ingresos|0|0|0
+4301|Intereses por Inversiones|D|3|43|Ingresos|0|0|0
+4302|Intereses Ganados en Cuentas Corrientes|D|3|43|Ingresos|0|0|0
+4303|Dividendos|D|3|43|Ingresos|0|0|0
+4304|Descuentos Obtorgado|D|3|43|Ingresos|0|0|0
+51013|Devoluciones sobre Compras de Materiales|D|4|5101|Gastos|0|0|0
+51014|Descuentos Sobre Compras de Materiales|D|4|5101|Gastos|0|0|0
+52|Gastos Generales y Administrativos|G|2|5|Gastos|0|0|0
+5201|Nόmina|G|3|52|Gastos|0|0|0
+52011|Sueldos|G|4|5201|Gastos|0|0|0
+520111|Gastos de Sueldos Empleados y Funcionario|D|5|52011|Gastos|0|0|0
+520112|Incentivos|D|5|52011|Gastos|0|0|0
+520113|Horas Extras|D|5|52011|Gastos|0|0|0
+520114|Comisiones|D|5|52011|Gastos|0|0|0
+520115|Mano de Obra por Contrato|D|5|52011|Gastos|0|0|0
+52012|Beneficios a los Empleados|G|4|5201|Gastos|0|0|0
+520121|Seguro Médico y Dental|D|5|52012|Gastos|0|0|0
+520122|Salario de Navidad|D|5|52012|Gastos|0|0|0
+520123|Vacaciones|D|5|52012|Gastos|0|0|0
+520124|Bonificación|D|5|52012|Gastos|0|0|0
+520125|Otros Beneficios a Empleados|D|5|52012|Gastos|0|0|0
+52013|Aportes Patronal|G|4|5201|Gastos|0|0|0
+520131|Aportes a Instituciones Estatales|G|5|52013|Gastos|0|0|0
+5201311|Seguro Social|D|6|5.00E+05|Gastos|0|0|0
+5201312|SVDS|D|6|5.00E++05|Gastos|0|0|0
+5201313|SFS|D|6|5.00E+05|Gastos|0|0|0
+5201314|INFOTEP|D|6|5.00E+05|Gastos|0|0|0
+5201315|Riesgos Laborales|D|6|5.00E+05|Gastos|0|0|0
+5202|Gastos de Mantenimiento|G|3|52|Gastos|0|0|0
+52021|Activos de la Categoría I|D|4|5202|Gastos|0|0|0
+52022|Activos de la Categoría II|D|4|5202|Gastos|0|0|0
+52023|Activos de la Categoría III|D|4|5202|Gastos|0|0|0
+5203|Gastos de Depreciaciόn|G|3|52|Gastos|0|0|0
+52031|Activos de la Categoría I|D|4|5203|Gastos|0|0|0
+52032|Activos de la Categoría II|D|4|5203|Gastos|0|0|0
+52033|Activos de la Categoría III|D|4|5203|Gastos|0|0|0
+5204|Amortizaciόn|G|3|52|Gastos|0|0|0
+52041|Mejoras a Arrendamientos|D|4|5204|Gastos|0|0|0
+52042|Gastos de Organizaciόn|D|4|5204|Gastos|0|0|0
+5205|Alquileres  y Arrendamientos|G|3|52|Gastos|0|0|0
+52051|Activos de la categoría I Gastos de Alquileres)|D|4|5205|Gastos|0|0|0
+52052|Activos de la categoría II|D|4|5205|Gastos|0|0|0
+52053|Activos de la categoría III|D|4|5205|Gastos|0|0|0
+5206|Seguros|G|3|52|Gastos|0|0|0
+52061|Vehículos|D|4|5206|Gastos|0|0|0
+52062|Negocio en General|D|4|5206|Gastos|0|0|0
+52063|Seguro de Vida|D|4|5206|Gastos|0|0|0
+5207|Gastos de Publicidad|G|3|52|Gastos|0|0|0
+52071|En Radio|D|4|5207|Gastos|0|0|0
+52072|En Televisión|D|4|5207|Gastos|0|0|0
+52073|En Periódicos|D|4|5207|Gastos|0|0|0
+52074|En Letreros y Afiches|D|4|5207|Gastos|0|0|0
+5209|Impuestos (Otros)|G|3|52|Gastos|0|0|0
+52091|Impuestos Ventas/Compras|D|4|5209|Gastos|0|0|0
+52092|Impuestos a la Propiedad|D|4|5209|Gastos|0|0|0
+52093|Impuestos a la Cont. Residuo Sólido IR-2-ISFL|D|4|5209|Gastos|0|0|0
+520115|Mano de Obra por Contrato|D|5|52011|Gastos|0|0|0
+52012|Beneficios a los Empleados|G|4|5201|Gastos|0|0|0
+520121|Seguro Médico y Dental|D|5|52012|Gastos|0|0|0
+520122|Salario de Navidad|D|5|52012|Gastos|0|0|0
+520123|Vacaciones|D|5|52012|Gastos|0|0|0
+520124|Bonificación|D|5|52012|Gastos|0|0|0
+520125|Otros Beneficios a Empleados|D|5|52012|Gastos|0|0|0
+52013|Aportes Patronal|G|4|5201|Gastos|0|0|0
+520131|Aportes a Instituciones Estatales|G|5|52013|Gastos|0|0|0
+5201311|Seguro Social|D|6|5.00E+05|Gastos|0|0|0
+5201312|SVDS|D|6|5.00E+05|Gastos|0|0|0
+5201313|SFS|D|6|5.00E+05|Gastos|0|0|0
+5201314|INFOTEP|D|6|5.00E+05|Gastos|0|0|0
+5201315|Riesgos Laborales|D|6|5.00E+05|Gastos|0|0|0
+5202|Gastos de Mantenimiento|G|3|52|Gastos|0|0|0
+52021|Activos de la Categoría I|D|4|5202|Gastos|0|0|0
+52022|Activos de la Categoría II|D|4|5202|Gastos|0|0|0
+52023|Activos de la Categoría III|D|4|5202|Gastos|0|0|0
+5203|Gastos de Depreciaciόn|G|3|52|Gastos|0|0|0
+52031|Activos de la Categoría I|D|4|5203|Gastos|0|0|0
+52032|Activos de la Categoría II|D|4|5203|Gastos|0|0|0
+52033|Activos de la Categoría III|D|4|5203|Gastos|0|0|0
+5204|Amortizaciόn|G|3|52|Gastos|0|0|0
+52041|Mejoras a Arrendamientos|D|4|5204|Gastos|0|0|0
+52042|Gastos de Organizaciόn|D|4|5204|Gastos|0|0|0
+5205|Alquileres  y Arrendamientos|G|3|52|Gastos|0|0|0
+52051|Activos de la categoría I Gastos de Alquileres)|D|4|5205|Gastos|0|0|0
+52052|Activos de la categoría II|D|4|5205|Gastos|0|0|0
+52053|Activos de la categoría III|D|4|5205|Gastos|0|0|0
+5206|Seguros|G|3|52|Gastos|0|0|0
+52061|Vehículos|D|4|5206|Gastos|0|0|0
+52062|Negocio en General|D|4|5206|Gastos|0|0|0
+52063|Seguro de Vida|D|4|5206|Gastos|0|0|0
+5207|Gastos de Publicidad|G|3|52|Gastos|0|0|0
+52071|En Radio|D|4|5207|Gastos|0|0|0
+52072|En Televisión|D|4|5207|Gastos|0|0|0
+52073|En Periódicos|D|4|5207|Gastos|0|0|0
+52074|En Letreros y Afiches|D|4|5207|Gastos|0|0|0
+5209|Impuestos (Otros)|G|3|52|Gastos|0|0|0
+52091|Impuestos Ventas/Compras|D|4|5209|Gastos|0|0|0
+52092|Impuestos a la Propiedad|D|4|5209|Gastos|0|0|0
+52093|Impuestos a la Cont. Residuo Sólido IR-2-ISFL|D|4|5209|Gastos|0|0|0
