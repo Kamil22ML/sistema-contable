@@ -59,6 +59,7 @@ public class MantenimientoCuentas extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCuentas = new javax.swing.JTable();
+        btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -156,6 +157,9 @@ public class MantenimientoCuentas extends javax.swing.JFrame {
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(this::btnBuscarActionPerformed);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -193,13 +197,16 @@ public class MantenimientoCuentas extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(btnLimpiar, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(btnGuardar, javax.swing.GroupLayout.Alignment.TRAILING)))))
+                                            .addComponent(btnGuardar, javax.swing.GroupLayout.Alignment.TRAILING)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(315, 315, 315)
+                                        .addComponent(btnBuscar))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnCerrar))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 17, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -226,14 +233,20 @@ public class MantenimientoCuentas extends javax.swing.JFrame {
                                     .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtPadre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnLimpiar))
-                                .addGap(16, 16, 16)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel7))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(cbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(16, 16, 16)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jLabel4)
+                                            .addComponent(jLabel7))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(cbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(cbGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnBuscar)
+                                        .addGap(7, 7, 7))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(14, 14, 14)
                                 .addComponent(jLabel6))))
@@ -437,6 +450,69 @@ public class MantenimientoCuentas extends javax.swing.JFrame {
         txtNumero.setEnabled(false);
     }//GEN-LAST:event_tblCuentasMouseClicked
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        String numero = txtNumero.getText().trim();
+
+        if (numero.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Debe escribir el No. de Cuenta para buscar.",
+                    "Validación",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            txtNumero.requestFocus();
+            return;
+        }
+
+        model.CuentaContable c = data.CuentaArchivo.buscarPorNumero(numero);
+
+        if (c == null) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "La cuenta NO existe. Puede crearla.",
+                    "Información",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+            // Preparar para creación
+            limpiarCamposExceptoNumero();
+            txtDescripcion.requestFocus();
+            return;
+        }
+
+        // Si existe, llenamos campos
+        txtDescripcion.setText(c.getDescripcion());
+        txtNivel.setText(String.valueOf(c.getNivel()));
+        txtPadre.setText(c.getPadre());
+
+        // Tipo: tu modelo guarda "G" o "D"
+        // Ajusta según tu combo (ej: "General", "Detalle" o "G", "D")
+        String tipo = c.getTipo();
+        if (tipo != null) tipo = tipo.trim().toUpperCase();
+
+        if ("G".equals(tipo)) {
+            cbTipo.setSelectedItem("General");   // cambia si tu combo usa otro texto
+        } else if ("D".equals(tipo)) {
+            cbTipo.setSelectedItem("Detalle");   // cambia si tu combo usa otro texto
+        } else {
+            cbTipo.setSelectedItem(tipo);        // por si tu combo tiene G/D directamente
+        }
+
+        // Grupo (Activo/Pasivo/Capital/Ingresos/Gastos)
+        cbGrupo.setSelectedItem(c.getGrupo());
+
+        javax.swing.JOptionPane.showMessageDialog(this,
+                "Cuenta encontrada. Puede modificar y guardar.",
+                "Información",
+                javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+        // Recomendado: no permitir cambiar el número cuando estás modificando
+        txtNumero.setEnabled(false);
+    }//GEN-LAST:event_btnBuscarActionPerformed
+    
+    private void limpiarCamposExceptoNumero() {
+        txtDescripcion.setText("");
+        txtNivel.setText("");
+        txtPadre.setText("");
+        if (cbTipo.getItemCount() > 0) cbTipo.setSelectedIndex(0);
+        if (cbGrupo.getItemCount() > 0) cbGrupo.setSelectedIndex(0);
+    }
     /**
      * @param args the command line arguments
      */
@@ -463,6 +539,7 @@ public class MantenimientoCuentas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;
