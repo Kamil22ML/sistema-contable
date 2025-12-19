@@ -69,6 +69,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
         mnuTransxDocumento = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -155,6 +157,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenuItem6.addActionListener(this::jMenuItem6ActionPerformed);
         jMenu4.add(jMenuItem6);
 
+        jMenuItem8.setText("Balance general");
+        jMenuItem8.addActionListener(this::jMenuItem8ActionPerformed);
+        jMenu4.add(jMenuItem8);
+
+        jMenuItem9.setText("Resultados");
+        jMenuItem9.addActionListener(this::jMenuItem9ActionPerformed);
+        jMenu4.add(jMenuItem9);
+
         jMenuBar1.add(jMenu4);
 
         setJMenuBar(jMenuBar1);
@@ -218,6 +228,16 @@ public class MenuPrincipal extends javax.swing.JFrame {
         new CierreDiario().setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        this.setVisible(false);
+        new ConsultaBalanceGeneral().setVisible(true);
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        this.setVisible(false);
+        new ConsultaEstadoResultados().setVisible(true);
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -256,6 +276,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JMenu jMenuMantenimientos;
     private javax.swing.JMenu jMenuProcesos;
     private javax.swing.JPanel jPanel1;

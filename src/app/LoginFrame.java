@@ -76,6 +76,7 @@ public class LoginFrame extends javax.swing.JFrame {
         btnSalir.setForeground(new java.awt.Color(255, 51, 51));
         btnSalir.setText("Salir");
         btnSalir.setName("btnSalir"); // NOI18N
+        btnSalir.addActionListener(this::btnSalirActionPerformed);
 
         txtPassword.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -216,6 +217,10 @@ public class LoginFrame extends javax.swing.JFrame {
         new MenuPrincipal(usuario).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnEntrarActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     /**
      * @param args the command line arguments
