@@ -16,6 +16,11 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
     public MovimientoTransacciones() {
         initComponents();
         setLocationRelativeTo(null); // centrar
+        
+        // Fecha automática (formato d/M/yyyy)
+        java.time.format.DateTimeFormatter f = java.time.format.DateTimeFormatter.ofPattern("d/M/yyyy");
+        txtFecha.setText(java.time.LocalDate.now().format(f));
+        txtFecha.setEditable(false);
 
         // Debito / Credito mutuamente excluyentes
         txtDebitoLinea.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -249,15 +254,23 @@ public class MovimientoTransacciones extends javax.swing.JFrame {
 
         tblDetalles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Secuencia", "Cuenta", "Debito", "Credito", "Comentario"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false, false, true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(tblDetalles);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);

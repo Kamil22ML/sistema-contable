@@ -295,96 +295,115 @@ public class MantenimientoCuentas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-    String numero = txtNumero.getText().trim();
-    String descripcion = txtDescripcion.getText().trim();
-    String tipoTexto = (String) cbTipo.getSelectedItem();
-    String nivelTexto = txtNivel.getText().trim();
-    String padre = txtPadre.getText().trim();
-    String grupo = (String) cbGrupo.getSelectedItem();
+        String numero = txtNumero.getText().trim();
+        String descripcion = txtDescripcion.getText().trim();
+        String nivelTxt = txtNivel.getText().trim();
+        String padre = txtPadre.getText().trim();
+        String tipoTexto = (String) cbTipo.getSelectedItem();
+        String grupo = (String) cbGrupo.getSelectedItem();
 
-    // Validar obligatorios básicos
-    if (numero.isEmpty() || descripcion.isEmpty() ||
-        "Seleccione".equals(tipoTexto) ||
-        nivelTexto.isEmpty() ||
-        "Seleccione".equals(grupo)) {
-
-        javax.swing.JOptionPane.showMessageDialog(this,
-                "Número, Descripción, Tipo, Nivel y Grupo son obligatorios.",
-                "Validación",
-                javax.swing.JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    int nivel;
-    try {
-        nivel = Integer.parseInt(nivelTexto);
-    } catch (NumberFormatException e) {
-        javax.swing.JOptionPane.showMessageDialog(this,
-                "El nivel debe ser un número entero.",
-                "Validación",
-                javax.swing.JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    // Convertir tipo a G/D
-    String tipo;
-    if ("GENERAL".equalsIgnoreCase(tipoTexto)) {
-        tipo = "G";
-    } else {
-        tipo = "D";
-    }
-
-    // Si no tiene padre, usamos "0"
-    if (padre.isEmpty()) {
-        padre = "0";
-    }
-
-    // Ver si existe la cuenta
-    model.CuentaContable existente = data.CuentaArchivo.buscarPorNumero(numero);
-
-    if (existente == null) {
-        // Crear nueva
-        model.CuentaContable nueva = new model.CuentaContable(
-                numero, descripcion, tipo, nivel, padre, grupo);
-
-        boolean ok = data.CuentaArchivo.agregar(nueva);
-
-        if (ok) {
+        // Validaciones básicas
+        if (numero.isEmpty() || descripcion.isEmpty() || nivelTxt.isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(this,
-                    "Cuenta creada correctamente (Creando).",
-                    "Información",
-                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            limpiarCampos();
-            cargarTablaCuentas();
-            txtNumero.setEnabled(true);
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Ya existe una cuenta con ese número.",
-                    "Error",
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    "Número, Descripción y Nivel son obligatorios.",
+                    "Validación",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
         }
-    } else {
-        // Modificar existente
+
+        int nivel;
+        try {
+            nivel = Integer.parseInt(nivelTxt);
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "El Nivel debe ser numérico.",
+                    "Validación",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Convertir tipo
+        String tipo;
+        if ("General".equalsIgnoreCase(tipoTexto)) {
+            tipo = "G";
+        } else {
+            tipo = "D";
+        }
+
+        model.CuentaContable existente = data.CuentaArchivo.buscarPorNumero(numero);
+
+        // ===============================
+        // CREAR NUEVA CUENTA
+        // ===============================
+        if (existente == null) {
+
+            model.CuentaContable nueva = new model.CuentaContable(
+                    numero,
+                    descripcion,
+                    tipo,
+                    nivel,
+                    padre,
+                    grupo
+            );
+
+            boolean ok = data.CuentaArchivo.agregar(nueva);
+
+            if (ok) {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "Cuenta creada correctamente.",
+                        "Información",
+                        javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                limpiarCampos();
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "No se pudo crear la cuenta.",
+                        "Error",
+                        javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+            return;
+        }
+
+        // ===============================
+        // MODIFICAR CUENTA EXISTENTE
+        // ===============================
+
+        // ❌ Regla CLAVE: NO modificar cuentas generales
+        if (!"D".equalsIgnoreCase(existente.getTipo())) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "No se puede modificar una cuenta GENERAL.\n"
+                  + "Solo las cuentas DETALLE pueden modificarse.",
+                    "Restricción",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         model.CuentaContable modificada = new model.CuentaContable(
-                numero, descripcion, tipo, nivel, padre, grupo);
+                numero,
+                descripcion,
+                tipo,
+                nivel,
+                padre,
+                grupo,
+                existente.getDebitoAcum(),
+                existente.getCreditoAcum(),
+                existente.getBalance()
+        );
 
         boolean ok = data.CuentaArchivo.actualizar(modificada);
 
         if (ok) {
             javax.swing.JOptionPane.showMessageDialog(this,
-                    "Cuenta modificada correctamente (Modificando).",
+                    "Cuenta modificada correctamente.",
                     "Información",
                     javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            limpiarCampos();
+            txtNumero.setEnabled(true);
         } else {
             javax.swing.JOptionPane.showMessageDialog(this,
-                    "No se pudo actualizar la cuenta.",
+                    "No se pudo modificar la cuenta.",
                     "Error",
                     javax.swing.JOptionPane.ERROR_MESSAGE);
         }
-    }
-    limpiarCampos();
-    cargarTablaCuentas();
-    txtNumero.setEnabled(true);
     }//GEN-LAST:event_btnGuardarActionPerformed
     
     private void cargarTablaCuentas() {
@@ -464,45 +483,65 @@ public class MantenimientoCuentas extends javax.swing.JFrame {
 
         model.CuentaContable c = data.CuentaArchivo.buscarPorNumero(numero);
 
+        // Si NO existe => permitir crear
         if (c == null) {
             javax.swing.JOptionPane.showMessageDialog(this,
                     "La cuenta NO existe. Puede crearla.",
                     "Información",
                     javax.swing.JOptionPane.INFORMATION_MESSAGE);
 
-            // Preparar para creación
             limpiarCamposExceptoNumero();
+
+            // Para creación: permitir edición y permitir escribir número
+            txtNumero.setEnabled(true);
+            setEdicionHabilitada(true);
+
             txtDescripcion.requestFocus();
             return;
         }
 
-        // Si existe, llenamos campos
+        // Si existe => llenar campos
         txtDescripcion.setText(c.getDescripcion());
         txtNivel.setText(String.valueOf(c.getNivel()));
         txtPadre.setText(c.getPadre());
 
-        // Tipo: tu modelo guarda "G" o "D"
-        // Ajusta según tu combo (ej: "General", "Detalle" o "G", "D")
         String tipo = c.getTipo();
         if (tipo != null) tipo = tipo.trim().toUpperCase();
 
         if ("G".equals(tipo)) {
-            cbTipo.setSelectedItem("General");   // cambia si tu combo usa otro texto
+            cbTipo.setSelectedItem("General");   // ajusta si tu combo usa otro texto
         } else if ("D".equals(tipo)) {
-            cbTipo.setSelectedItem("Detalle");   // cambia si tu combo usa otro texto
+            cbTipo.setSelectedItem("Detalle");   // ajusta si tu combo usa otro texto
         } else {
-            cbTipo.setSelectedItem(tipo);        // por si tu combo tiene G/D directamente
+            cbTipo.setSelectedItem(tipo);
         }
 
-        // Grupo (Activo/Pasivo/Capital/Ingresos/Gastos)
         cbGrupo.setSelectedItem(c.getGrupo());
 
+        // REGLA: Solo se pueden modificar cuentas DETALLE
+        if (!"D".equalsIgnoreCase(tipo)) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Esta cuenta es GENERAL. No se permite modificar.\n"
+                  + "Solo se pueden modificar cuentas DETALLE.",
+                    "Restricción",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+
+            // Bloquear edición, pero permitir buscar otra
+            setEdicionHabilitada(false);
+            txtNumero.setEnabled(true);
+            txtNumero.requestFocus();
+            return;
+        }
+
+        // Si es detalle => sí se puede editar
         javax.swing.JOptionPane.showMessageDialog(this,
-                "Cuenta encontrada. Puede modificar y guardar.",
+                "Cuenta DETALLE encontrada. Puede modificar y guardar.",
                 "Información",
                 javax.swing.JOptionPane.INFORMATION_MESSAGE);
 
-        // Recomendado: no permitir cambiar el número cuando estás modificando
+        setEdicionHabilitada(true);
+
+        // En modificación: no permitir cambiar el número
         txtNumero.setEnabled(false);
     }//GEN-LAST:event_btnBuscarActionPerformed
     
@@ -513,6 +552,24 @@ public class MantenimientoCuentas extends javax.swing.JFrame {
         if (cbTipo.getItemCount() > 0) cbTipo.setSelectedIndex(0);
         if (cbGrupo.getItemCount() > 0) cbGrupo.setSelectedIndex(0);
     }
+    
+    private void setEdicionHabilitada(boolean habilitar) {
+        //NO incluyo txtNumero aquí porque lo controlamos aparte
+        txtDescripcion.setEnabled(habilitar);
+        cbTipo.setEnabled(habilitar);
+        txtNivel.setEnabled(habilitar);
+        txtPadre.setEnabled(habilitar);
+        cbGrupo.setEnabled(habilitar);
+
+        btnGuardar.setEnabled(habilitar);
+        // btnEliminar si tienes, también:
+        // btnEliminar.setEnabled(habilitar);
+    }
+
+    private boolean esDetalle(model.CuentaContable c) {
+        return c != null && c.getTipo() != null && c.getTipo().trim().equalsIgnoreCase("D");
+    }
+
     /**
      * @param args the command line arguments
      */

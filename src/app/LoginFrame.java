@@ -6,7 +6,7 @@ package app;
 
 /**
  *
- * @author kamil
+ * @author alex
  */
 public class LoginFrame extends javax.swing.JFrame {
     
@@ -213,7 +213,11 @@ public class LoginFrame extends javax.swing.JFrame {
                 "Acceso concedido",
                 javax.swing.JOptionPane.INFORMATION_MESSAGE);
 
+                
         // Próximo paso: abrir menú principal según tipo
+        
+        model.Usuario usuarioEncontrado = data.UsuarioArchivo.buscarPorLogin(login);
+
         new MenuPrincipal(usuario).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnEntrarActionPerformed

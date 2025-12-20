@@ -1,6 +1,6 @@
 ﻿1|Activos|G|1||Activo|0.0|0.0|0.0
 11|Activos Circulantes|G|2|1|Activo|0.0|0.0|0.0
-1101|Efectivo en Caja|G|3|11|Activo|0.0|0.0|0.0
+1101|Efectivo en Caja|D|3|11|Activo|0.0|0.0|0.0
 11011|Caja Chica|D|4|1101|Activo|0.0|0.0|0.0
 1102|Efectivo en Bancos|G|3|11|Activo|0.0|0.0|0.0
 11021|Banco Popular Dominicano|D|4|1102|Activo|0.0|0.0|0.0
